@@ -1,0 +1,589 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1A000001294B1234567890AA /* MeetingRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000002294B1234567890AA /* MeetingRecorderApp.swift */; };
+		1A000003294B1234567890AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000004294B1234567890AA /* ContentView.swift */; };
+		1A000005294B1234567890AA /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000006294B1234567890AA /* Recording.swift */; };
+		1A000007294B1234567890AA /* RecordingEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000008294B1234567890AA /* RecordingEntity.swift */; };
+		1A000009294B1234567890AA /* SpeakerProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00000A294B1234567890AA /* SpeakerProfile.swift */; };
+		1A00000B294B1234567890AA /* SpeakerProfileEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00000C294B1234567890AA /* SpeakerProfileEntity.swift */; };
+		1A00000D294B1234567890AA /* StorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00000E294B1234567890AA /* StorageError.swift */; };
+		1A00000F294B1234567890AA /* SyncError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000010294B1234567890AA /* SyncError.swift */; };
+		1A000011294B1234567890AA /* TranscriptSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000012294B1234567890AA /* TranscriptSegment.swift */; };
+		1A000013294B1234567890AA /* CloudSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000014294B1234567890AA /* CloudSyncService.swift */; };
+		1A000015294B1234567890AA /* CloudSyncServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000016294B1234567890AA /* CloudSyncServiceProtocol.swift */; };
+		1A000017294B1234567890AA /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000018294B1234567890AA /* ExportService.swift */; };
+		1A000019294B1234567890AA /* RecordingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00001A294B1234567890AA /* RecordingService.swift */; };
+		1A00001B294B1234567890AA /* RecordingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00001C294B1234567890AA /* RecordingServiceProtocol.swift */; };
+		1A00001D294B1234567890AA /* SpeakerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00001E294B1234567890AA /* SpeakerService.swift */; };
+		1A00001F294B1234567890AA /* SpeakerServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000020294B1234567890AA /* SpeakerServiceProtocol.swift */; };
+		1A000021294B1234567890AA /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000022294B1234567890AA /* StorageManager.swift */; };
+		1A000023294B1234567890AA /* StorageManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000024294B1234567890AA /* StorageManagerProtocol.swift */; };
+		1A000025294B1234567890AA /* TranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000026294B1234567890AA /* TranscriptionService.swift */; };
+		1A000027294B1234567890AA /* TranscriptionServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000028294B1234567890AA /* TranscriptionServiceProtocol.swift */; };
+		1A000029294B1234567890AA /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00002A294B1234567890AA /* AppEnvironment.swift */; };
+		1A00002B294B1234567890AA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00002C294B1234567890AA /* Colors.swift */; };
+		1A00002D294B1234567890AA /* CoreDataConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00002E294B1234567890AA /* CoreDataConversions.swift */; };
+		1A00002F294B1234567890AA /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000030294B1234567890AA /* CoreDataModel.swift */; };
+		1A000031294B1234567890AA /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000032294B1234567890AA /* ErrorAlert.swift */; };
+		1A000033294B1234567890AA /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000034294B1234567890AA /* Errors.swift */; };
+		1A000035294B1234567890AA /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000036294B1234567890AA /* HapticFeedback.swift */; };
+		1A000037294B1234567890AA /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000038294B1234567890AA /* LoadingView.swift */; };
+		1A000039294B1234567890AA /* PerformanceOptimizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00003A294B1234567890AA /* PerformanceOptimizations.swift */; };
+		1A00003B294B1234567890AA /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00003C294B1234567890AA /* PermissionManager.swift */; };
+		1A00003D294B1234567890AA /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00003E294B1234567890AA /* PersistenceController.swift */; };
+		1A00003F294B1234567890AA /* ProgressView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000040294B1234567890AA /* ProgressView+Extensions.swift */; };
+		1A000041294B1234567890AA /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000042294B1234567890AA /* ShareSheet.swift */; };
+		1A000043294B1234567890AA /* StateRestorationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000044294B1234567890AA /* StateRestorationManager.swift */; };
+		1A000045294B1234567890AA /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000046294B1234567890AA /* ToastView.swift */; };
+		1A000047294B1234567890AA /* UserFeedbackExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000048294B1234567890AA /* UserFeedbackExamples.swift */; };
+		1A000049294B1234567890AA /* RecordingDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00004A294B1234567890AA /* RecordingDetailViewModel.swift */; };
+		1A00004B294B1234567890AA /* RecordingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00004C294B1234567890AA /* RecordingListViewModel.swift */; };
+		1A00004D294B1234567890AA /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00004E294B1234567890AA /* RecordingViewModel.swift */; };
+		1A00004F294B1234567890AA /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000050294B1234567890AA /* SettingsViewModel.swift */; };
+		1A000051294B1234567890AA /* AudioLevelMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000052294B1234567890AA /* AudioLevelMeterView.swift */; };
+		1A000053294B1234567890AA /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000054294B1234567890AA /* FilterView.swift */; };
+		1A000055294B1234567890AA /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000056294B1234567890AA /* MainTabView.swift */; };
+		1A000057294B1234567890AA /* PermissionRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000058294B1234567890AA /* PermissionRequestView.swift */; };
+		1A000059294B1234567890AA /* RecordingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00005A294B1234567890AA /* RecordingDetailView.swift */; };
+		1A00005B294B1234567890AA /* RecordingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00005C294B1234567890AA /* RecordingListView.swift */; };
+		1A00005D294B1234567890AA /* RecordingRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00005E294B1234567890AA /* RecordingRowView.swift */; };
+		1A00005F294B1234567890AA /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000060294B1234567890AA /* RecordingView.swift */; };
+		1A000061294B1234567890AA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000062294B1234567890AA /* SettingsView.swift */; };
+		1A000063294B1234567890AA /* StorageBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000064294B1234567890AA /* StorageBreakdownView.swift */; };
+		1A000065294B1234567890AA /* MeetingRecorder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1A000066294B1234567890AA /* MeetingRecorder.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1A000001294B1234567890AB /* Parley.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Parley.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A000002294B1234567890AA /* MeetingRecorderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingRecorderApp.swift; sourceTree = "<group>"; };
+		1A000004294B1234567890AA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1A000006294B1234567890AA /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
+		1A000008294B1234567890AA /* RecordingEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingEntity.swift; sourceTree = "<group>"; };
+		1A00000A294B1234567890AA /* SpeakerProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerProfile.swift; sourceTree = "<group>"; };
+		1A00000C294B1234567890AA /* SpeakerProfileEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerProfileEntity.swift; sourceTree = "<group>"; };
+		1A00000E294B1234567890AA /* StorageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageError.swift; sourceTree = "<group>"; };
+		1A000010294B1234567890AA /* SyncError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncError.swift; sourceTree = "<group>"; };
+		1A000012294B1234567890AA /* TranscriptSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptSegment.swift; sourceTree = "<group>"; };
+		1A000014294B1234567890AA /* CloudSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncService.swift; sourceTree = "<group>"; };
+		1A000016294B1234567890AA /* CloudSyncServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncServiceProtocol.swift; sourceTree = "<group>"; };
+		1A000018294B1234567890AA /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
+		1A00001A294B1234567890AA /* RecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingService.swift; sourceTree = "<group>"; };
+		1A00001C294B1234567890AA /* RecordingServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingServiceProtocol.swift; sourceTree = "<group>"; };
+		1A00001E294B1234567890AA /* SpeakerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerService.swift; sourceTree = "<group>"; };
+		1A000020294B1234567890AA /* SpeakerServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerServiceProtocol.swift; sourceTree = "<group>"; };
+		1A000022294B1234567890AA /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		1A000024294B1234567890AA /* StorageManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerProtocol.swift; sourceTree = "<group>"; };
+		1A000026294B1234567890AA /* TranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionService.swift; sourceTree = "<group>"; };
+		1A000028294B1234567890AA /* TranscriptionServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionServiceProtocol.swift; sourceTree = "<group>"; };
+		1A00002A294B1234567890AA /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		1A00002C294B1234567890AA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		1A00002E294B1234567890AA /* CoreDataConversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataConversions.swift; sourceTree = "<group>"; };
+		1A000030294B1234567890AA /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
+		1A000032294B1234567890AA /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
+		1A000034294B1234567890AA /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		1A000036294B1234567890AA /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
+		1A000038294B1234567890AA /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		1A00003A294B1234567890AA /* PerformanceOptimizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceOptimizations.swift; sourceTree = "<group>"; };
+		1A00003C294B1234567890AA /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		1A00003E294B1234567890AA /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		1A000040294B1234567890AA /* ProgressView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgressView+Extensions.swift"; sourceTree = "<group>"; };
+		1A000042294B1234567890AA /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		1A000044294B1234567890AA /* StateRestorationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateRestorationManager.swift; sourceTree = "<group>"; };
+		1A000046294B1234567890AA /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		1A000048294B1234567890AA /* UserFeedbackExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFeedbackExamples.swift; sourceTree = "<group>"; };
+		1A00004A294B1234567890AA /* RecordingDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetailViewModel.swift; sourceTree = "<group>"; };
+		1A00004C294B1234567890AA /* RecordingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingListViewModel.swift; sourceTree = "<group>"; };
+		1A00004E294B1234567890AA /* RecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModel.swift; sourceTree = "<group>"; };
+		1A000050294B1234567890AA /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		1A000052294B1234567890AA /* AudioLevelMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioLevelMeterView.swift; sourceTree = "<group>"; };
+		1A000054294B1234567890AA /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		1A000056294B1234567890AA /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		1A000058294B1234567890AA /* PermissionRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRequestView.swift; sourceTree = "<group>"; };
+		1A00005A294B1234567890AA /* RecordingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetailView.swift; sourceTree = "<group>"; };
+		1A00005C294B1234567890AA /* RecordingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingListView.swift; sourceTree = "<group>"; };
+		1A00005E294B1234567890AA /* RecordingRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingRowView.swift; sourceTree = "<group>"; };
+		1A000060294B1234567890AA /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
+		1A000062294B1234567890AA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1A000064294B1234567890AA /* StorageBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageBreakdownView.swift; sourceTree = "<group>"; };
+		1A000066294B1234567890AA /* MeetingRecorder.xcdatamodeld */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MeetingRecorder.xcdatamodeld; sourceTree = "<group>"; };
+		1A000068294B1234567890AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1A000069294B1234567890AA /* MeetingRecorder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeetingRecorder.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1A00006A294B1234567890AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1A00006B294B1234567890AA = {
+			isa = PBXGroup;
+			children = (
+				1A00006C294B1234567890AA /* Parley */,
+				1A00006D294B1234567890AA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1A00006C294B1234567890AA /* Parley */ = {
+			isa = PBXGroup;
+			children = (
+				1A000002294B1234567890AA /* MeetingRecorderApp.swift */,
+				1A000004294B1234567890AA /* ContentView.swift */,
+				1A000068294B1234567890AA /* Info.plist */,
+				1A000069294B1234567890AA /* MeetingRecorder.entitlements */,
+				1A00006E294B1234567890AA /* Models */,
+				1A00006F294B1234567890AA /* Services */,
+				1A000070294B1234567890AA /* Views */,
+				1A000071294B1234567890AA /* ViewModels */,
+				1A000072294B1234567890AA /* Utilities */,
+				1A000073294B1234567890AA /* Resources */,
+			);
+			path = Parley;
+			sourceTree = "<group>";
+		};
+		1A00006D294B1234567890AA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1A000001294B1234567890AB /* Parley.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1A00006E294B1234567890AA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1A000006294B1234567890AA /* Recording.swift */,
+				1A000008294B1234567890AA /* RecordingEntity.swift */,
+				1A00000A294B1234567890AA /* SpeakerProfile.swift */,
+				1A00000C294B1234567890AA /* SpeakerProfileEntity.swift */,
+				1A00000E294B1234567890AA /* StorageError.swift */,
+				1A000010294B1234567890AA /* SyncError.swift */,
+				1A000012294B1234567890AA /* TranscriptSegment.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1A00006F294B1234567890AA /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1A000014294B1234567890AA /* CloudSyncService.swift */,
+				1A000016294B1234567890AA /* CloudSyncServiceProtocol.swift */,
+				1A000018294B1234567890AA /* ExportService.swift */,
+				1A00001A294B1234567890AA /* RecordingService.swift */,
+				1A00001C294B1234567890AA /* RecordingServiceProtocol.swift */,
+				1A00001E294B1234567890AA /* SpeakerService.swift */,
+				1A000020294B1234567890AA /* SpeakerServiceProtocol.swift */,
+				1A000022294B1234567890AA /* StorageManager.swift */,
+				1A000024294B1234567890AA /* StorageManagerProtocol.swift */,
+				1A000026294B1234567890AA /* TranscriptionService.swift */,
+				1A000028294B1234567890AA /* TranscriptionServiceProtocol.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1A000070294B1234567890AA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1A000052294B1234567890AA /* AudioLevelMeterView.swift */,
+				1A000054294B1234567890AA /* FilterView.swift */,
+				1A000056294B1234567890AA /* MainTabView.swift */,
+				1A000058294B1234567890AA /* PermissionRequestView.swift */,
+				1A00005A294B1234567890AA /* RecordingDetailView.swift */,
+				1A00005C294B1234567890AA /* RecordingListView.swift */,
+				1A00005E294B1234567890AA /* RecordingRowView.swift */,
+				1A000060294B1234567890AA /* RecordingView.swift */,
+				1A000062294B1234567890AA /* SettingsView.swift */,
+				1A000064294B1234567890AA /* StorageBreakdownView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1A000071294B1234567890AA /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1A00004A294B1234567890AA /* RecordingDetailViewModel.swift */,
+				1A00004C294B1234567890AA /* RecordingListViewModel.swift */,
+				1A00004E294B1234567890AA /* RecordingViewModel.swift */,
+				1A000050294B1234567890AA /* SettingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		1A000072294B1234567890AA /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				1A00002A294B1234567890AA /* AppEnvironment.swift */,
+				1A00002C294B1234567890AA /* Colors.swift */,
+				1A00002E294B1234567890AA /* CoreDataConversions.swift */,
+				1A000030294B1234567890AA /* CoreDataModel.swift */,
+				1A000032294B1234567890AA /* ErrorAlert.swift */,
+				1A000034294B1234567890AA /* Errors.swift */,
+				1A000036294B1234567890AA /* HapticFeedback.swift */,
+				1A000038294B1234567890AA /* LoadingView.swift */,
+				1A00003A294B1234567890AA /* PerformanceOptimizations.swift */,
+				1A00003C294B1234567890AA /* PermissionManager.swift */,
+				1A00003E294B1234567890AA /* PersistenceController.swift */,
+				1A000040294B1234567890AA /* ProgressView+Extensions.swift */,
+				1A000042294B1234567890AA /* ShareSheet.swift */,
+				1A000044294B1234567890AA /* StateRestorationManager.swift */,
+				1A000046294B1234567890AA /* ToastView.swift */,
+				1A000048294B1234567890AA /* UserFeedbackExamples.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		1A000073294B1234567890AA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1A000066294B1234567890AA /* MeetingRecorder.xcdatamodeld */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1A000074294B1234567890AA /* Parley */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A000075294B1234567890AA /* Build configuration list for PBXNativeTarget "Parley" */;
+			buildPhases = (
+				1A000076294B1234567890AA /* Sources */,
+				1A00006A294B1234567890AA /* Frameworks */,
+				1A000077294B1234567890AA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Parley;
+			productName = Parley;
+			productReference = 1A000001294B1234567890AB /* Parley.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1A000078294B1234567890AA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					1A000074294B1234567890AA = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 1A000079294B1234567890AA /* Build configuration list for PBXProject "MeetingRecorder" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1A00006B294B1234567890AA;
+			productRefGroup = 1A00006D294B1234567890AA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1A000074294B1234567890AA /* Parley */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1A000077294B1234567890AA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1A000076294B1234567890AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A000001294B1234567890AA /* MeetingRecorderApp.swift in Sources */,
+				1A000003294B1234567890AA /* ContentView.swift in Sources */,
+				1A000005294B1234567890AA /* Recording.swift in Sources */,
+				1A000007294B1234567890AA /* RecordingEntity.swift in Sources */,
+				1A000009294B1234567890AA /* SpeakerProfile.swift in Sources */,
+				1A00000B294B1234567890AA /* SpeakerProfileEntity.swift in Sources */,
+				1A00000D294B1234567890AA /* StorageError.swift in Sources */,
+				1A00000F294B1234567890AA /* SyncError.swift in Sources */,
+				1A000011294B1234567890AA /* TranscriptSegment.swift in Sources */,
+				1A000013294B1234567890AA /* CloudSyncService.swift in Sources */,
+				1A000015294B1234567890AA /* CloudSyncServiceProtocol.swift in Sources */,
+				1A000017294B1234567890AA /* ExportService.swift in Sources */,
+				1A000019294B1234567890AA /* RecordingService.swift in Sources */,
+				1A00001B294B1234567890AA /* RecordingServiceProtocol.swift in Sources */,
+				1A00001D294B1234567890AA /* SpeakerService.swift in Sources */,
+				1A00001F294B1234567890AA /* SpeakerServiceProtocol.swift in Sources */,
+				1A000021294B1234567890AA /* StorageManager.swift in Sources */,
+				1A000023294B1234567890AA /* StorageManagerProtocol.swift in Sources */,
+				1A000025294B1234567890AA /* TranscriptionService.swift in Sources */,
+				1A000027294B1234567890AA /* TranscriptionServiceProtocol.swift in Sources */,
+				1A000029294B1234567890AA /* AppEnvironment.swift in Sources */,
+				1A00002B294B1234567890AA /* Colors.swift in Sources */,
+				1A00002D294B1234567890AA /* CoreDataConversions.swift in Sources */,
+				1A00002F294B1234567890AA /* CoreDataModel.swift in Sources */,
+				1A000031294B1234567890AA /* ErrorAlert.swift in Sources */,
+				1A000033294B1234567890AA /* Errors.swift in Sources */,
+				1A000035294B1234567890AA /* HapticFeedback.swift in Sources */,
+				1A000037294B1234567890AA /* LoadingView.swift in Sources */,
+				1A000039294B1234567890AA /* PerformanceOptimizations.swift in Sources */,
+				1A00003B294B1234567890AA /* PermissionManager.swift in Sources */,
+				1A00003D294B1234567890AA /* PersistenceController.swift in Sources */,
+				1A00003F294B1234567890AA /* ProgressView+Extensions.swift in Sources */,
+				1A000041294B1234567890AA /* ShareSheet.swift in Sources */,
+				1A000043294B1234567890AA /* StateRestorationManager.swift in Sources */,
+				1A000045294B1234567890AA /* ToastView.swift in Sources */,
+				1A000047294B1234567890AA /* UserFeedbackExamples.swift in Sources */,
+				1A000049294B1234567890AA /* RecordingDetailViewModel.swift in Sources */,
+				1A00004B294B1234567890AA /* RecordingListViewModel.swift in Sources */,
+				1A00004D294B1234567890AA /* RecordingViewModel.swift in Sources */,
+				1A00004F294B1234567890AA /* SettingsViewModel.swift in Sources */,
+				1A000051294B1234567890AA /* AudioLevelMeterView.swift in Sources */,
+				1A000053294B1234567890AA /* FilterView.swift in Sources */,
+				1A000055294B1234567890AA /* MainTabView.swift in Sources */,
+				1A000057294B1234567890AA /* PermissionRequestView.swift in Sources */,
+				1A000059294B1234567890AA /* RecordingDetailView.swift in Sources */,
+				1A00005B294B1234567890AA /* RecordingListView.swift in Sources */,
+				1A00005D294B1234567890AA /* RecordingRowView.swift in Sources */,
+				1A00005F294B1234567890AA /* RecordingView.swift in Sources */,
+				1A000061294B1234567890AA /* SettingsView.swift in Sources */,
+				1A000063294B1234567890AA /* StorageBreakdownView.swift in Sources */,
+				1A000065294B1234567890AA /* MeetingRecorder.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1A00007A294B1234567890AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1A00007B294B1234567890AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1A00007C294B1234567890AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Parley/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Parley;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to record meetings.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.parley.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1A00007D294B1234567890AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Parley/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Parley;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to record meetings.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.parley.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1A000075294B1234567890AA /* Build configuration list for PBXNativeTarget "Parley" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A00007C294B1234567890AA /* Debug */,
+				1A00007D294B1234567890AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1A000079294B1234567890AA /* Build configuration list for PBXProject "Parley" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A00007A294B1234567890AA /* Debug */,
+				1A00007B294B1234567890AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1A000078294B1234567890AA /* Project object */;
+}

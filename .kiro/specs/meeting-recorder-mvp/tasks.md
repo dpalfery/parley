@@ -503,7 +503,7 @@
 
 
 
-  - [x] 16.1 Write unit tests for services
+  - [x]  16.1 Write unit tests for services
 
 
     - Test RecordingService state transitions and audio configuration
