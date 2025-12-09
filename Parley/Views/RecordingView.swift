@@ -161,8 +161,16 @@ struct RecordingView: View {
                     print("🔴 DEBUG: Calling stopRecording()")
                     Task {
                         if let recording = await viewModel.stopRecording() {
-                            // Recording saved - dismiss view or navigate
-                            dismiss()
+                            // Save recording using StorageManager
+                            do {
+                                try await appEnvironment.storageManager.saveRecording(recording)
+                                print("✅ DEBUG: Recording saved successfully")
+                                // Notify lists to update
+                                NotificationCenter.default.post(name: .recordingDidSave, object: nil)
+                            } catch {
+                                print("❌ DEBUG: Failed to save recording: \(error)")
+                                // TODO: Handle save error (e.g. show alert)
+                            }
                         }
                     }
                 }

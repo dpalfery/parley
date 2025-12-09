@@ -34,6 +34,16 @@ class RecordingListViewModel: ObservableObject {
     
     /// Sets up observers for search and filter changes
     private func setupSearchAndFilterObservers() {
+        // Observe recording save notifications to refresh list
+        NotificationCenter.default.publisher(for: .recordingDidSave)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                Task {
+                    await self?.loadRecordings()
+                }
+            }
+            .store(in: &cancellables)
+
         // Debounce search query changes
         $searchQuery
             .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
