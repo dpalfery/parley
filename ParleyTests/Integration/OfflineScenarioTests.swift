@@ -6,10 +6,12 @@
 //
 
 import XCTest
-@testable import MeetingRecorder
+import Combine
+@testable import Parley
 
 final class OfflineScenarioTests: XCTestCase {
     
+    var recordingService: RecordingService!
     var storageManager: StorageManager!
     var cloudSyncService: CloudSyncService!
     var persistenceController: PersistenceController!
@@ -20,9 +22,11 @@ final class OfflineScenarioTests: XCTestCase {
         persistenceController = PersistenceController(inMemory: true)
         storageManager = StorageManager(persistenceController: persistenceController)
         cloudSyncService = CloudSyncService(storageManager: storageManager)
+        recordingService = RecordingService()
     }
     
     override func tearDown() {
+        recordingService = nil
         storageManager = nil
         cloudSyncService = nil
         persistenceController = nil
@@ -59,7 +63,7 @@ final class OfflineScenarioTests: XCTestCase {
         try await storageManager.saveRecording(recording3)
         
         // Then: All should be saved locally
-        let allRecordings = try await storageManager.getAllRecordings(sortedBy: .date)
+        let allRecordings = try await storageManager.getAllRecordings(sortedBy: .dateDescending)
         XCTAssertEqual(allRecordings.count, 3)
         
         // Then: None should be synced
@@ -106,7 +110,7 @@ final class OfflineScenarioTests: XCTestCase {
         }
         
         // Then: All should be in local storage
-        let allRecordings = try await storageManager.getAllRecordings(sortedBy: .date)
+        let allRecordings = try await storageManager.getAllRecordings(sortedBy: .dateDescending)
         XCTAssertEqual(allRecordings.count, 3)
     }
     
@@ -142,7 +146,7 @@ final class OfflineScenarioTests: XCTestCase {
         try await cloudSyncService.syncAll()
         
         // Then: Should only attempt to sync unsynced recordings
-        let allRecordings = try await storageManager.getAllRecordings(sortedBy: .date)
+        let allRecordings = try await storageManager.getAllRecordings(sortedBy: .dateDescending)
         let unsyncedCount = allRecordings.filter { !$0.isSynced }.count
         
         // At least one should be unsynced (the one we created as unsynced)
@@ -216,7 +220,7 @@ final class OfflineScenarioTests: XCTestCase {
         try await storageManager.saveRecording(recording2)
         
         // When: Calculating storage usage offline
-        let usage = await storageManager.getStorageUsage()
+        let usage = try await storageManager.getStorageUsage()
         
         // Then: Should calculate from local data
         XCTAssertEqual(usage.totalBytes, 3_000_000)
@@ -238,15 +242,43 @@ final class OfflineScenarioTests: XCTestCase {
     
     // MARK: - Sync Status Tests
     
-    func testSyncStatusWhileOffline() {
-        // Given: Offline state
+    private func getCurrentSyncStatus() -> SyncStatus {
+        var status: SyncStatus = .idle
+        let expectation = XCTestExpectation(description: "Get status")
+        let cancellable = cloudSyncService.syncStatus.sink { value in
+            status = value
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1.0)
+        cancellable.cancel()
+        return status
+    }
+
+    func testOfflineRecording() async throws {
+        // Given: Offline status
+        // (Mocking network reachability would be ideal, but for now we verify service behavior)
         
-        // When: Checking sync status
-        let status = cloudSyncService.syncStatus
+        // When: Starting recording
+        _ = try await recordingService.startRecording(quality: .medium)
+        try await Task.sleep(nanoseconds: 1_000_000_000)
+        let recording = try await recordingService.stopRecording()
+        try await storageManager.saveRecording(recording)
         
-        // Then: Should reflect offline or idle state
-        // Note: Actual implementation would detect network state
-        XCTAssertTrue(status == .idle || status == .offline)
+        // Then: Should be saved locally
+        let retrieved = try await storageManager.getRecording(id: recording.id)
+        XCTAssertNotNil(retrieved)
+        XCTAssertFalse(retrieved!.isSynced)
+        
+        // When: Attempting sync
+        // (In a real scenario, we would simulate offline state here)
+        // For this test, we just check that sync status reflects appropriate state
+        let status = getCurrentSyncStatus()
+        switch status {
+        case .idle, .offline:
+            XCTAssertTrue(true)
+        default:
+            XCTFail("Status should be idle or offline, but was \(status)")
+        }
     }
     
     func testSyncStatusTransitionOnConnectivity() async throws {

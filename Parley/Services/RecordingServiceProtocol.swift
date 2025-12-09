@@ -20,6 +20,9 @@ protocol RecordingServiceProtocol {
     /// Publisher for elapsed recording duration in seconds
     var duration: Published<TimeInterval>.Publisher { get }
     
+    /// Publisher for audio buffers captured during recording
+    var audioBufferPublisher: AnyPublisher<AVAudioPCMBuffer, Never> { get }
+    
     /// Starts a new recording session with specified audio quality
     /// - Parameter quality: The audio quality setting for the recording
     /// - Returns: A RecordingSession object representing the active session

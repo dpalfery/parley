@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import MeetingRecorder
+@testable import Parley
 
 final class ExportFlowIntegrationTests: XCTestCase {
     
@@ -43,7 +43,7 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Exporting as plain text
-        let textURL = try await exportService.generatePlainText(recording: recording)
+        let textURL = try await exportService.generatePlainText(for: recording)
         
         // Then: Should create text file
         XCTAssertNotNil(textURL)
@@ -70,7 +70,7 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Exporting as Markdown
-        let markdownURL = try await exportService.generateMarkdown(recording: recording)
+        let markdownURL = try await exportService.generateMarkdown(for: recording)
         
         // Then: Should create markdown file
         XCTAssertNotNil(markdownURL)
@@ -96,7 +96,7 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(testRecording)
         
         // When: Exporting audio
-        let audioURL = try await exportService.generateAudio(recording: testRecording)
+        let audioURL = try await exportService.generateAudio(for: testRecording)
         
         // Then: Should return audio file URL
         XCTAssertNotNil(audioURL)
@@ -112,9 +112,9 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Exporting in all formats
-        let textURL = try await exportService.generatePlainText(recording: recording)
-        let markdownURL = try await exportService.generateMarkdown(recording: recording)
-        let audioURL = try await exportService.generateAudio(recording: recording)
+        let textURL = try await exportService.generatePlainText(for: recording)
+        let markdownURL = try await exportService.generateMarkdown(for: recording)
+        let audioURL = try await exportService.generateAudio(for: recording)
         
         // Then: All exports should succeed
         XCTAssertNotNil(textURL)
@@ -131,13 +131,25 @@ final class ExportFlowIntegrationTests: XCTestCase {
         // Given: Recording with edited transcript
         var recording = testRecording!
         var transcript = createTestTranscript()
-        transcript[0].text = "Edited: Hello everyone"
-        transcript[0].isEdited = true
-        recording.transcript = transcript
+        // Simulate editing by creating a new modified segment
+        // (Since TranscriptSegment is immutable, we can't modify it in place)
+        var segments = recording.transcript
+        let originalSegment = segments[0]
+        let editedSegment = TranscriptSegment(
+            id: originalSegment.id,
+            text: "Edited: Hello everyone",
+            timestamp: originalSegment.timestamp,
+            duration: originalSegment.duration,
+            confidence: originalSegment.confidence,
+            speakerID: originalSegment.speakerID,
+            isEdited: true
+        )
+        segments[0] = editedSegment
+        recording.transcript = segments
         try await storageManager.saveRecording(recording)
         
         // When: Exporting
-        let textURL = try await exportService.generatePlainText(recording: recording)
+        let textURL = try await exportService.generatePlainText(for: recording)
         
         // Then: Should include edited content
         let content = try String(contentsOf: textURL, encoding: .utf8)
@@ -151,7 +163,7 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Exporting as text
-        let textURL = try await exportService.generatePlainText(recording: recording)
+        let textURL = try await exportService.generatePlainText(for: recording)
         
         // Then: Should still create file with metadata
         XCTAssertNotNil(textURL)
@@ -164,7 +176,7 @@ final class ExportFlowIntegrationTests: XCTestCase {
         var recording = testRecording!
         recording.transcript = createTestTranscript()
         
-        let textURL = try await exportService.generatePlainText(recording: recording)
+        let textURL = try await exportService.generatePlainText(for: recording)
         
         // When: Cleaning up temporary files
         let fileManager = FileManager.default
@@ -187,7 +199,7 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Exporting
-        let markdownURL = try await exportService.generateMarkdown(recording: recording)
+        let markdownURL = try await exportService.generateMarkdown(for: recording)
         
         // Then: Should include tags
         let content = try String(contentsOf: markdownURL, encoding: .utf8)
@@ -203,8 +215,8 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Preparing files for sharing
-        let textURL = try await exportService.generatePlainText(recording: recording)
-        let audioURL = try await exportService.generateAudio(recording: recording)
+        let textURL = try await exportService.generatePlainText(for: recording)
+        let audioURL = try await exportService.generateAudio(for: recording)
         
         // Then: Files should be ready for UIActivityViewController
         XCTAssertNotNil(textURL)

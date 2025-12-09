@@ -56,8 +56,12 @@ class PersistenceController {
         // CloudKit sync temporarily disabled until iCloud container is configured
         container = NSPersistentContainer(name: "MeetingRecorder")
 
-        if inMemory {
-            container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        if let description = container.persistentStoreDescriptions.first {
+            if inMemory {
+                description.url = URL(fileURLWithPath: "/dev/null")
+            }
+            description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+            description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
         }
         
         container.loadPersistentStores { storeDescription, error in

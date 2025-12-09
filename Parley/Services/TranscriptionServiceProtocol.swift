@@ -19,10 +19,13 @@ protocol TranscriptionServiceProtocol {
     /// - Throws: TranscriptionError if transcription cannot be started
     func startTranscription(audioURL: URL) async throws
     
-    /// Starts real-time transcription from live audio buffer
-    /// - Parameter audioBuffer: Audio buffer containing live audio data
+    /// Starts real-time transcription session
     /// - Throws: TranscriptionError if live transcription cannot be started
-    func startLiveTranscription(audioBuffer: AVAudioPCMBuffer) async throws
+    func startLiveTranscription() async throws
+    
+    /// Processes an audio buffer for the active live transcription session
+    /// - Parameter buffer: Audio buffer containing live audio data
+    func processAudioBuffer(_ buffer: AVAudioPCMBuffer)
     
     /// Stops the current transcription process
     func stopTranscription() async

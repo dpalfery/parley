@@ -28,4 +28,21 @@ struct SpeakerProfile: Identifiable, Codable {
         self.createdAt = createdAt
         self.lastUsed = lastUsed
     }
+    
+    // MARK: - Helper Methods
+    
+    /// Returns a new profile with updated display name
+    func withUpdatedName(_ name: String) -> SpeakerProfile {
+        var copy = self
+        copy.displayName = name
+        copy.lastUsed = Date()
+        return copy
+    }
+    
+    /// Returns a new profile with updated last used timestamp
+    func withUpdatedLastUsed() -> SpeakerProfile {
+        var copy = self
+        copy.lastUsed = Date()
+        return copy
+    }
 }

@@ -11,7 +11,7 @@ import AVFoundation
 import UIKit
 import os.log
 
-/// Implementation of RecordingServiceProtocol for audio recording management
+/// Implementation of RecordingServiceProtocol for audio recording management using AVAudioEngine
 final class RecordingService: NSObject, RecordingServiceProtocol {
     
     // MARK: - Published Properties
@@ -24,9 +24,15 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
     var audioLevel: Published<Float>.Publisher { $_audioLevel }
     var duration: Published<TimeInterval>.Publisher { $_duration }
     
+    // MARK: - Audio Buffer Publisher
+    
+    private let _audioBufferSubject = PassthroughSubject<AVAudioPCMBuffer, Never>()
+    var audioBufferPublisher: AnyPublisher<AVAudioPCMBuffer, Never> { _audioBufferSubject.eraseToAnyPublisher() }
+    
     // MARK: - Private Properties
     
-    private var audioRecorder: AVAudioRecorder?
+    private var audioEngine: AVAudioEngine?
+    private var audioFile: AVAudioFile?
     private var currentSession: RecordingSession?
     private var meteringTimer: Timer?
     private var recordingStartTime: Date?
@@ -50,23 +56,31 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
     
     // MARK: - Audio Session Configuration
     
-    /// Configures the audio session for recording
     private func configureAudioSession() throws {
         let audioSession = AVAudioSession.sharedInstance()
+        let category: AVAudioSession.Category = .playAndRecord
+        let mode: AVAudioSession.Mode = .measurement // Measurement mode often best for speech recog
+        var options: AVAudioSession.CategoryOptions = [.defaultToSpeaker, .allowBluetooth]
+        
+        if shouldEnableBluetoothHFP(for: audioSession) {
+            options.insert(.allowBluetoothHFP)
+        }
         
         do {
-            // Configure session with record category and allow bluetooth
-            try audioSession.setCategory(.record, mode: .default, options: [.allowBluetoothHFP])
-            try audioSession.setActive(true, options: [])
-            
+            try audioSession.setCategory(category, mode: mode, options: options)
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             logger.info("Audio session configured successfully")
         } catch {
             logger.error("Failed to configure audio session: \(error.localizedDescription)")
             throw RecordingError.audioSessionConfigurationFailed
         }
     }
+
+    private func shouldEnableBluetoothHFP(for session: AVAudioSession) -> Bool {
+        guard let inputs = session.availableInputs else { return false }
+        return inputs.contains { $0.portType == .bluetoothHFP }
+    }
     
-    /// Deactivates the audio session
     private func deactivateAudioSession() {
         do {
             try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
@@ -76,7 +90,6 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
         }
     }
     
-    /// Requests microphone permission
     private func requestMicrophonePermission() async throws {
         let status = AVAudioSession.sharedInstance().recordPermission
         
@@ -108,28 +121,6 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
             name: AVAudioSession.interruptionNotification,
             object: AVAudioSession.sharedInstance()
         )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleRouteChange),
-            name: AVAudioSession.routeChangeNotification,
-            object: AVAudioSession.sharedInstance()
-        )
-        
-        // Monitor app state transitions for background recording
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleAppDidEnterBackground),
-            name: UIApplication.didEnterBackgroundNotification,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleAppWillEnterForeground),
-            name: UIApplication.willEnterForegroundNotification,
-            object: nil
-        )
     }
     
     @objc private func handleInterruption(notification: Notification) {
@@ -141,89 +132,19 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
         
         switch type {
         case .began:
-            // Interruption began (phone call, alarm, etc.)
             logger.info("Audio session interrupted")
             if _recordingState == .recording {
-                Task {
-                    try? await pauseRecording()
-                }
+                Task { try? await pauseRecording() }
             }
-            
         case .ended:
-            // Interruption ended
-            guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else {
-                return
-            }
+            guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
             let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
-            
             if options.contains(.shouldResume) {
                 logger.info("Audio session interruption ended, should resume")
-                // Reactivate audio session
-                do {
-                    try configureAudioSession()
-                } catch {
-                    logger.error("Failed to reactivate audio session after interruption: \(error.localizedDescription)")
-                    ErrorLogger.log(RecordingError.audioSessionConfigurationFailed, context: "handleInterruption")
-                }
+                try? configureAudioSession()
             }
-            
         @unknown default:
             break
-        }
-    }
-    
-    @objc private func handleRouteChange(notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
-              let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
-            return
-        }
-        
-        switch reason {
-        case .oldDeviceUnavailable:
-            // Audio device was removed (e.g., headphones unplugged)
-            logger.info("Audio route changed: device unavailable")
-            // Continue recording with built-in microphone
-            
-        default:
-            break
-        }
-    }
-    
-    @objc private func handleAppDidEnterBackground(notification: Notification) {
-        // Ensure audio session remains active for background recording
-        if _recordingState == .recording || _recordingState == .paused {
-            logger.info("App entered background while recording - maintaining audio session")
-            
-            // Audio session should remain active due to background audio mode
-            // The recording will continue automatically
-            
-            // Verify audio session is still active
-            let audioSession = AVAudioSession.sharedInstance()
-            if !audioSession.isOtherAudioPlaying {
-                do {
-                    try audioSession.setActive(true, options: [])
-                    logger.info("Audio session reactivated for background recording")
-                } catch {
-                    logger.error("Failed to maintain audio session in background: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    
-    @objc private func handleAppWillEnterForeground(notification: Notification) {
-        // App returning to foreground
-        if _recordingState == .recording || _recordingState == .paused {
-            logger.info("App entering foreground while recording - verifying recording state")
-            
-            // Verify recording is still active
-            if let recorder = audioRecorder {
-                if _recordingState == .recording && !recorder.isRecording {
-                    logger.warning("Recording was interrupted in background")
-                    // Recording was stopped unexpectedly - update state
-                    _recordingState = .paused
-                }
-            }
         }
     }
     
@@ -232,33 +153,17 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
     func startRecording(quality: AudioQuality) async throws -> RecordingSession {
         logger.info("🎤 startRecording() entered")
 
-        // Check if already recording
         guard _recordingState == .idle else {
-            logger.error("🎤 Already recording - throwing error")
             throw RecordingError.recordingInProgress
         }
-        logger.info("🎤 State check passed - is idle")
 
-        // Request microphone permission
-        logger.info("🎤 About to request microphone permission")
         try await requestMicrophonePermission()
-        logger.info("🎤 Microphone permission granted")
-
-        // Configure audio session
-        logger.info("🎤 Configuring audio session")
         try configureAudioSession()
-        logger.info("🎤 Audio session configured")
-
-        // Check available disk space
-        logger.info("🎤 Checking disk space")
         try checkDiskSpace()
-        logger.info("🎤 Disk space check passed")
         
-        // Create session ID and audio URL first
         let sessionId = UUID()
         let audioURL = try createAudioFileURL(for: sessionId)
         
-        // Create recording session
         let session = RecordingSession(
             id: sessionId,
             startTime: Date(),
@@ -267,88 +172,94 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
         )
         currentSession = session
         
-        // Setup audio recorder
-        let settings = createAudioSettings(for: quality)
+        // Setup AVAudioEngine
+        audioEngine = AVAudioEngine()
+        guard let audioEngine = audioEngine else { throw RecordingError.audioEngineFailure }
+        
+        let inputNode = audioEngine.inputNode
+        let format = inputNode.outputFormat(forBus: 0)
+        
+        // Setup Audio File for writing
+        // Note: AVAudioFile handles the file format. We use the input format settings.
+        // To respect 'quality', we might need to convert, but for MVP we use native input format
+        // to ensure best transcription results and simplify the pipeline.
+        // Saving as uncompressed or high-quality CAF/M4A is safer for transcription.
         
         do {
-            audioRecorder = try AVAudioRecorder(url: audioURL, settings: settings)
-            audioRecorder?.delegate = self
-            audioRecorder?.isMeteringEnabled = true
+            let settings = format.settings
+            audioFile = try AVAudioFile(forWriting: audioURL, settings: settings)
+        } catch {
+            logger.error("Failed to create audio file: \(error.localizedDescription)")
+            throw RecordingError.audioEngineFailure
+        }
+        
+        // Install Tap
+        inputNode.installTap(onBus: 0, bufferSize: 4096, format: format) { [weak self] buffer, time in
+            guard let self = self else { return }
             
-            // Start recording
-            guard audioRecorder?.record() == true else {
-                throw RecordingError.audioEngineFailure
+            // 1. Write to file
+            do {
+                try self.audioFile?.write(from: buffer)
+            } catch {
+                self.logger.error("Error writing audio buffer: \(error)")
             }
             
-            // Update state
+            // 2. Calculate levels for metering
+            self.calculateAudioLevel(from: buffer)
+            
+            // 3. Publish buffer for transcription
+            self._audioBufferSubject.send(buffer)
+        }
+        
+        do {
+            try audioEngine.start()
             _recordingState = .recording
             recordingStartTime = Date()
             pausedDuration = 0.0
             pauseResumeMarkers = []
             
-            // Start metering timer
-            startMeteringTimer()
+            // Start duration timer
+            startDurationTimer()
             
-            logger.info("Recording started with quality: \(quality)")
-            
+            logger.info("Recording started with AVAudioEngine")
             return session
-            
         } catch {
-            logger.error("Failed to start recording: \(error.localizedDescription)")
-            deactivateAudioSession()
+            logger.error("Failed to start audio engine: \(error.localizedDescription)")
             throw RecordingError.audioEngineFailure
         }
     }
     
     func pauseRecording() async throws {
-        guard _recordingState == .recording else {
+        guard _recordingState == .recording, let engine = audioEngine, engine.isRunning else {
             throw RecordingError.noActiveRecording
         }
         
-        guard let recorder = audioRecorder, recorder.isRecording else {
-            throw RecordingError.noActiveRecording
-        }
+        engine.pause()
         
-        // Pause the recorder
-        recorder.pause()
-        
-        // Record pause timestamp
         let currentDuration = calculateCurrentDuration()
         pauseStartTime = Date()
         pauseResumeMarkers.append((timestamp: currentDuration, isPause: true))
         
-        // Update state
         _recordingState = .paused
-        
-        logger.info("Recording paused at \(currentDuration) seconds")
+        logger.info("Recording paused")
     }
     
     func resumeRecording() async throws {
-        guard _recordingState == .paused else {
+        guard _recordingState == .paused, let engine = audioEngine else {
             throw RecordingError.noActiveRecording
         }
         
-        guard let recorder = audioRecorder else {
-            throw RecordingError.noActiveRecording
-        }
-        
-        // Calculate paused duration
         if let pauseStart = pauseStartTime {
             pausedDuration += Date().timeIntervalSince(pauseStart)
             pauseStartTime = nil
         }
         
-        // Record resume timestamp
         let currentDuration = calculateCurrentDuration()
         pauseResumeMarkers.append((timestamp: currentDuration, isPause: false))
         
-        // Resume recording
-        recorder.record()
-        
-        // Update state
+        try engine.start()
         _recordingState = .recording
-        
-        logger.info("Recording resumed at \(currentDuration) seconds")
+        logger.info("Recording resumed")
     }
     
     func stopRecording() async throws -> Recording {
@@ -356,34 +267,30 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
             throw RecordingError.noActiveRecording
         }
         
-        guard let recorder = audioRecorder,
-              let session = currentSession else {
+        guard let engine = audioEngine, let session = currentSession else {
             throw RecordingError.noActiveRecording
         }
         
-        // Update state
         _recordingState = .processing
+        stopDurationTimer()
         
-        // Stop metering timer
-        stopMeteringTimer()
+        // Stop engine and remove tap
+        engine.inputNode.removeTap(onBus: 0)
+        engine.stop()
         
-        // Stop recording
-        recorder.stop()
+        // Close file (setting to nil releases it)
+        audioFile = nil
+        audioEngine = nil
         
-        // Calculate final duration
         let finalDuration = calculateCurrentDuration()
+        let fileSize = try getFileSize(at: session.audioFileURL)
         
-        // Get audio file URL and size
-        let audioURL = recorder.url
-        let fileSize = try getFileSize(at: audioURL)
-        
-        // Create recording object
         let recording = Recording(
             id: session.id,
             title: generateDefaultTitle(for: session.startTime),
             date: session.startTime,
             duration: finalDuration,
-            audioFileURL: audioURL,
+            audioFileURL: session.audioFileURL,
             transcript: [],
             speakers: [],
             tags: [],
@@ -393,24 +300,18 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
             lastModified: Date()
         )
         
-        // Clean up
-        audioRecorder = nil
         currentSession = nil
         recordingStartTime = nil
         pausedDuration = 0.0
         pauseStartTime = nil
-        pauseResumeMarkers = []
         
-        // Deactivate audio session
         deactivateAudioSession()
         
-        // Update state
         _recordingState = .idle
         _audioLevel = 0.0
         _duration = 0.0
         
-        logger.info("Recording stopped. Duration: \(finalDuration) seconds, Size: \(fileSize) bytes")
-        
+        logger.info("Recording stopped. Duration: \(finalDuration)")
         return recording
     }
     
@@ -419,29 +320,25 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
             throw RecordingError.noActiveRecording
         }
         
-        guard let recorder = audioRecorder else {
-            throw RecordingError.noActiveRecording
+        stopDurationTimer()
+        
+        audioEngine?.inputNode.removeTap(onBus: 0)
+        audioEngine?.stop()
+        audioEngine = nil
+        audioFile = nil // Closes file
+        
+        // Delete file
+        if let url = currentSession?.audioFileURL {
+            try? FileManager.default.removeItem(at: url)
         }
         
-        // Stop metering timer
-        stopMeteringTimer()
-        
-        // Stop and delete recording
-        recorder.stop()
-        recorder.deleteRecording()
-        
-        // Clean up
-        audioRecorder = nil
         currentSession = nil
         recordingStartTime = nil
         pausedDuration = 0.0
         pauseStartTime = nil
-        pauseResumeMarkers = []
         
-        // Deactivate audio session
         deactivateAudioSession()
         
-        // Update state
         _recordingState = .idle
         _audioLevel = 0.0
         _duration = 0.0
@@ -451,38 +348,61 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
     
     // MARK: - Helper Methods
     
+    private func calculateAudioLevel(from buffer: AVAudioPCMBuffer) {
+        guard let channelData = buffer.floatChannelData?[0] else { return }
+        let channelDataValue = channelData.pointee
+        let channelDataArray = Array(UnsafeBufferPointer(start: channelData, count: Int(buffer.frameLength)))
+        
+        var sum: Float = 0
+        for value in channelDataArray {
+            sum += value * value
+        }
+        
+        let rms = sqrt(sum / Float(buffer.frameLength))
+        let avgPower = 20 * log10(rms)
+        
+        // Normalize
+        let normalizedLevel = pow(10, avgPower / 20)
+        let clampedLevel = max(0.0, min(1.0, normalizedLevel))
+        
+        DispatchQueue.main.async {
+            self._audioLevel = clampedLevel
+        }
+    }
+    
+    private func startDurationTimer() {
+        DispatchQueue.main.async { [weak self] in
+            self?.meteringTimer?.invalidate()
+            self?.meteringTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                guard let self = self else { return }
+                self._duration = self.calculateCurrentDuration()
+            }
+        }
+    }
+    
+    private func stopDurationTimer() {
+        DispatchQueue.main.async { [weak self] in
+            self?.meteringTimer?.invalidate()
+            self?.meteringTimer = nil
+        }
+    }
+    
+    // Copy existing helpers
     private func createAudioFileURL(for id: UUID) throws -> URL {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let recordingsPath = documentsPath.appendingPathComponent("Recordings", isDirectory: true)
         let sessionPath = recordingsPath.appendingPathComponent(id.uuidString, isDirectory: true)
-        
-        // Create directories if needed
         try FileManager.default.createDirectory(at: sessionPath, withIntermediateDirectories: true)
-        
         return sessionPath.appendingPathComponent(RecordingAudioConfig.audioFileName)
-    }
-    
-    private func createAudioSettings(for quality: AudioQuality) -> [String: Any] {
-        RecordingAudioConfig.audioSettings(for: quality)
     }
     
     private func checkDiskSpace() throws {
         guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             throw RecordingError.diskSpaceInsufficient
         }
-        
-        do {
-            let values = try path.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
-            if let capacity = values.volumeAvailableCapacityForImportantUsage {
-                // Require at least 100 MB free space
-                let requiredSpace: Int64 = 100 * 1024 * 1024
-                if capacity < requiredSpace {
-                    throw RecordingError.diskSpaceInsufficient
-                }
-            }
-        } catch {
-            // If we can't determine space, allow recording to proceed
-            logger.warning("Could not determine available disk space")
+        let values = try path.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
+        if let capacity = values.volumeAvailableCapacityForImportantUsage, capacity < 100 * 1024 * 1024 {
+            throw RecordingError.diskSpaceInsufficient
         }
     }
     
@@ -499,64 +419,11 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
     
     private func calculateCurrentDuration() -> TimeInterval {
         guard let startTime = recordingStartTime else { return 0.0 }
-        
         let elapsed = Date().timeIntervalSince(startTime)
-        
-        // Subtract paused duration
         var totalPausedDuration = pausedDuration
         if let pauseStart = pauseStartTime {
             totalPausedDuration += Date().timeIntervalSince(pauseStart)
         }
-        
         return max(0, elapsed - totalPausedDuration)
-    }
-    
-    // MARK: - Metering
-    
-    private func startMeteringTimer() {
-        // Update at 60Hz for smooth visualization
-        meteringTimer = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true) { [weak self] _ in
-            self?.updateMeters()
-        }
-    }
-    
-    private func stopMeteringTimer() {
-        meteringTimer?.invalidate()
-        meteringTimer = nil
-    }
-    
-    private func updateMeters() {
-        guard let recorder = audioRecorder, recorder.isRecording else {
-            return
-        }
-        
-        recorder.updateMeters()
-        
-        // Get average power for channel 0 (mono recording)
-        let averagePower = recorder.averagePower(forChannel: 0)
-        
-        // Convert from dB to linear scale (0.0 to 1.0)
-        // averagePower ranges from -160 dB (silence) to 0 dB (max)
-        let normalizedLevel = pow(10, averagePower / 20)
-        
-        // Update published properties
-        _audioLevel = max(0.0, min(1.0, normalizedLevel))
-        _duration = calculateCurrentDuration()
-    }
-}
-
-// MARK: - AVAudioRecorderDelegate
-
-extension RecordingService: AVAudioRecorderDelegate {
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        if !flag {
-            logger.error("Audio recorder finished unsuccessfully")
-        }
-    }
-    
-    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
-        if let error = error {
-            logger.error("Audio recorder encode error: \(error.localizedDescription)")
-        }
     }
 }

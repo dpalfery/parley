@@ -6,7 +6,8 @@
 //
 
 import XCTest
-@testable import MeetingRecorder
+import Combine
+@testable import Parley
 
 final class CloudSyncServiceTests: XCTestCase {
     

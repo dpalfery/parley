@@ -7,7 +7,8 @@
 
 import XCTest
 import AVFoundation
-@testable import MeetingRecorder
+import Combine
+@testable import Parley
 
 final class RecordingServiceTests: XCTestCase {
     

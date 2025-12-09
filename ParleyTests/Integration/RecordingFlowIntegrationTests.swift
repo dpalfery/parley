@@ -7,7 +7,8 @@
 
 import XCTest
 import AVFoundation
-@testable import MeetingRecorder
+import Combine
+@testable import Parley
 
 final class RecordingFlowIntegrationTests: XCTestCase {
     
@@ -26,7 +27,7 @@ final class RecordingFlowIntegrationTests: XCTestCase {
         storageManager = StorageManager(persistenceController: persistenceController)
         transcriptionService = TranscriptionService()
         speakerService = SpeakerService()
-        recordingService = RecordingService(transcriptionService: transcriptionService)
+        recordingService = RecordingService()
         cloudSyncService = CloudSyncService(storageManager: storageManager)
     }
     
@@ -40,22 +41,34 @@ final class RecordingFlowIntegrationTests: XCTestCase {
         super.tearDown()
     }
     
+    private func getCurrentState() -> RecordingState {
+        var state: RecordingState = .idle
+        let expectation = XCTestExpectation(description: "Get state")
+        let cancellable = recordingService.recordingState.sink { value in
+            state = value
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1.0)
+        cancellable.cancel()
+        return state
+    }
+
     // MARK: - End-to-End Recording Flow Tests
     
     func testCompleteRecordingFlow() async throws {
         // Given: All services initialized
-        XCTAssertEqual(recordingService.recordingState, .idle)
+        XCTAssertEqual(getCurrentState(), .idle)
         
         // When: Starting recording
         let session = try await recordingService.startRecording(quality: .medium)
-        XCTAssertEqual(recordingService.recordingState, .recording)
+        XCTAssertEqual(getCurrentState(), .recording)
         
         // Simulate recording for a short duration
         try await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
         
         // When: Stopping recording
         let recording = try await recordingService.stopRecording()
-        XCTAssertEqual(recordingService.recordingState, .idle)
+        XCTAssertEqual(getCurrentState(), .idle)
         XCTAssertNotNil(recording)
         XCTAssertGreaterThan(recording.duration, 0)
         
@@ -81,17 +94,24 @@ final class RecordingFlowIntegrationTests: XCTestCase {
         _ = try await recordingService.startRecording(quality: .medium)
         try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
         
-        let durationBeforePause = recordingService.duration
+        var durationBeforePause: TimeInterval = 0
+        let expectation = XCTestExpectation(description: "Get duration")
+        let cancellable = recordingService.duration.sink { value in
+            durationBeforePause = value
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1.0)
+        cancellable.cancel()
         
         // When: Pausing
         try await recordingService.pauseRecording()
-        XCTAssertEqual(recordingService.recordingState, .paused)
+        XCTAssertEqual(getCurrentState(), .paused)
         
         try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second pause
         
         // When: Resuming
         try await recordingService.resumeRecording()
-        XCTAssertEqual(recordingService.recordingState, .recording)
+        XCTAssertEqual(getCurrentState(), .recording)
         
         try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
         
@@ -188,7 +208,7 @@ final class RecordingFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording3)
         
         // Then: All recordings should be retrievable
-        let allRecordings = try await storageManager.getAllRecordings(sortedBy: .date)
+        let allRecordings = try await storageManager.getAllRecordings(sortedBy: .dateDescending)
         XCTAssertEqual(allRecordings.count, 3)
         
         // When: Syncing all
@@ -207,10 +227,10 @@ final class RecordingFlowIntegrationTests: XCTestCase {
         try await recordingService.cancelRecording()
         
         // Then: Should return to idle without saving
-        XCTAssertEqual(recordingService.recordingState, .idle)
+        XCTAssertEqual(getCurrentState(), .idle)
         
         // Then: No recording should be saved
-        let allRecordings = try await storageManager.getAllRecordings(sortedBy: .date)
+        let allRecordings = try await storageManager.getAllRecordings(sortedBy: .dateDescending)
         XCTAssertEqual(allRecordings.count, 0)
     }
 }
