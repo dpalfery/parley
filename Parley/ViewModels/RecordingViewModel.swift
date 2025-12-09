@@ -102,6 +102,12 @@ final class RecordingViewModel: ObservableObject {
         // Bind audio level
         recordingService.audioLevel
             .receive(on: DispatchQueue.main)
+            .map { linearLevel in
+                guard linearLevel > 0 else { return 0.0 }
+                let db = 20 * log10(linearLevel)
+                let minDb: Float = -60.0
+                return max(0.0, min(1.0, (db - minDb) / (0.0 - minDb)))
+            }
             .assign(to: &$audioLevel)
         
         // Bind duration
@@ -113,6 +119,14 @@ final class RecordingViewModel: ObservableObject {
         transcriptionService.transcriptSegments
             .receive(on: DispatchQueue.main)
             .assign(to: &$transcriptSegments)
+            
+        // Bind audio buffer stream to transcription service
+        recordingService.audioBufferPublisher
+            .receive(on: DispatchQueue.main) // Ensure consistent thread if needed, but processing usually ok on background
+            .sink { [weak self] buffer in
+                self?.transcriptionService.processAudioBuffer(buffer)
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - Accessibility
@@ -142,12 +156,13 @@ final class RecordingViewModel: ObservableObject {
             guard hasPermission else { return }
             
             do {
+                // Start transcription first (setup request)
+                try await transcriptionService.startLiveTranscription()
+                
                 print("🎙️ DEBUG: About to call recordingService.startRecording()")
                 currentRecordingSession = try await recordingService.startRecording(quality: quality)
                 print("🎙️ DEBUG: Recording started successfully, session: \(currentRecordingSession?.id.uuidString ?? "nil")")
                 recordingStartTime = Date()
-                // Note: Live transcription would require audio buffer access
-                // For MVP, we'll transcribe after recording completes
             } catch {
                 print("🎙️ DEBUG: Error starting recording: \(error)")
                 handleError(error)
@@ -178,10 +193,13 @@ final class RecordingViewModel: ObservableObject {
     func stopRecording() async -> Recording? {
         do {
             let recording = try await recordingService.stopRecording()
+            await transcriptionService.stopTranscription()
             
             // Add notes to recording
             var updatedRecording = recording
             updatedRecording.notes = notes
+            // Attach the final transcript
+            updatedRecording.transcript = await transcriptionService.getFullTranscript()
             
             // Clear state restoration
             stateRestorationManager?.clearRecordingState()
@@ -202,6 +220,7 @@ final class RecordingViewModel: ObservableObject {
         Task {
             do {
                 try await recordingService.cancelRecording()
+                await transcriptionService.stopTranscription()
                 
                 // Clear state restoration
                 stateRestorationManager?.clearRecordingState()
