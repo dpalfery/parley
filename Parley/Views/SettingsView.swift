@@ -11,8 +11,10 @@ import SwiftUI
 struct SettingsView: View {
     @StateObject private var viewModel: SettingsViewModel
     @Environment(\.dismiss) private var dismiss
+    var showDoneButton: Bool
     
-    init(storageManager: StorageManagerProtocol, cloudSyncService: CloudSyncServiceProtocol) {
+    init(storageManager: StorageManagerProtocol, cloudSyncService: CloudSyncServiceProtocol, showDoneButton: Bool = false) {
+        self.showDoneButton = showDoneButton
         _viewModel = StateObject(wrappedValue: SettingsViewModel(
             storageManager: storageManager,
             cloudSyncService: cloudSyncService
@@ -115,9 +117,11 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
-                        dismiss()
+                if showDoneButton {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Done") {
+                            dismiss()
+                        }
                     }
                 }
             }

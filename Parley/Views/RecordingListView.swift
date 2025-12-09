@@ -60,7 +60,8 @@ struct RecordingListView: View {
             .sheet(isPresented: $showingSettings) {
                 SettingsView(
                     storageManager: viewModel.storageManager,
-                    cloudSyncService: CloudSyncService(storageManager: viewModel.storageManager)
+                    cloudSyncService: CloudSyncService(storageManager: viewModel.storageManager),
+                    showDoneButton: true
                 )
             }
             .task {
