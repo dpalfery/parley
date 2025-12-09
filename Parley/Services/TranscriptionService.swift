@@ -25,7 +25,6 @@ final class TranscriptionService: TranscriptionServiceProtocol {
     private var speechRecognizer: SFSpeechRecognizer?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
-    private var audioEngine: AVAudioEngine?
     
     private var recordingStartTime: Date?
     private var currentSegmentStartTime: TimeInterval = 0.0
@@ -135,7 +134,7 @@ final class TranscriptionService: TranscriptionServiceProtocol {
         }
     }
     
-    func startLiveTranscription(audioBuffer: AVAudioPCMBuffer) async throws {
+    func startLiveTranscription() async throws {
         // Request authorization
         try await requestSpeechRecognitionAuthorization()
         
@@ -149,11 +148,6 @@ final class TranscriptionService: TranscriptionServiceProtocol {
         _transcriptSegments = []
         recordingStartTime = Date()
         currentSegmentStartTime = 0.0
-        
-        // Create audio engine if needed
-        if audioEngine == nil {
-            audioEngine = AVAudioEngine()
-        }
         
         // Create recognition request
         let request = SFSpeechAudioBufferRecognitionRequest()
@@ -190,11 +184,12 @@ final class TranscriptionService: TranscriptionServiceProtocol {
             self.processTranscriptionResult(result, isFinal: result.isFinal)
         }
         
-        // Append the audio buffer
-        recognitionRequest?.append(audioBuffer)
-        
         // Start segment timer to restart recognition every minute
         startSegmentTimer()
+    }
+    
+    func processAudioBuffer(_ buffer: AVAudioPCMBuffer) {
+        recognitionRequest?.append(buffer)
     }
     
     func stopTranscription() async {
@@ -203,10 +198,6 @@ final class TranscriptionService: TranscriptionServiceProtocol {
         // Stop segment timer
         segmentTimer?.invalidate()
         segmentTimer = nil
-        
-        // Stop audio engine
-        audioEngine?.stop()
-        audioEngine?.inputNode.removeTap(onBus: 0)
         
         // End recognition request
         recognitionRequest?.endAudio()
@@ -233,53 +224,101 @@ final class TranscriptionService: TranscriptionServiceProtocol {
         // Get the best transcription
         let transcription = result.bestTranscription
         
-        // Process each segment
+        // Aggregate segments into phrases
         var newSegments: [TranscriptSegment] = []
+        var currentPhraseWords: [SFTranscriptionSegment] = []
+        var currentPhraseStartTime: TimeInterval?
+        
+        // Simple heuristic: break phrase if gap between words is > 0.8s
+        let pauseThreshold: TimeInterval = 0.8
         
         for (index, segment) in transcription.segments.enumerated() {
-            // Calculate timestamp relative to recording start
-            let segmentTimestamp = currentSegmentStartTime + segment.timestamp
-            
-            // Calculate duration (use next segment's timestamp or remaining time)
-            let duration: TimeInterval
-            if index < transcription.segments.count - 1 {
-                duration = transcription.segments[index + 1].timestamp - segment.timestamp
-            } else {
-                // For last segment, estimate duration based on text length
-                duration = Double(segment.substring.count) * 0.05 // ~50ms per character
+            if let lastWord = currentPhraseWords.last {
+                let gap = segment.timestamp - (lastWord.timestamp + lastWord.duration)
+                if gap > pauseThreshold {
+                    // Finalize current phrase
+                    if let start = currentPhraseStartTime, !currentPhraseWords.isEmpty {
+                        let text = currentPhraseWords.map { $0.substring }.joined(separator: " ")
+                        let duration = (currentPhraseWords.last?.timestamp ?? 0) + (currentPhraseWords.last?.duration ?? 0) - start
+                        let confidence = currentPhraseWords.map { $0.confidence }.reduce(0, +) / Float(currentPhraseWords.count)
+                        
+                        newSegments.append(TranscriptSegment(
+                            id: stableID(for: currentSegmentStartTime + start),
+                            text: text,
+                            timestamp: currentSegmentStartTime + start,
+                            duration: duration,
+                            confidence: confidence,
+                            speakerID: "Speaker 1", // Placeholder for diarization
+                            isEdited: false
+                        ))
+                    }
+                    // Start new phrase
+                    currentPhraseWords = []
+                    currentPhraseStartTime = nil
+                }
             }
             
-            // Get confidence score (average of all alternatives)
-            let confidence = segment.confidence
+            if currentPhraseWords.isEmpty {
+                currentPhraseStartTime = segment.timestamp
+            }
+            currentPhraseWords.append(segment)
+        }
+        
+        // Handle the active (last) phrase
+        if let start = currentPhraseStartTime, !currentPhraseWords.isEmpty {
+            let text = currentPhraseWords.map { $0.substring }.joined(separator: " ")
+            let duration = (currentPhraseWords.last?.timestamp ?? 0) + (currentPhraseWords.last?.duration ?? 0) - start
+            let confidence = currentPhraseWords.map { $0.confidence }.reduce(0, +) / Float(currentPhraseWords.count)
             
-            // Create transcript segment
-            // Note: Speaker ID will be assigned by SpeakerService later
-            let transcriptSegment = TranscriptSegment(
-                id: UUID(),
-                text: segment.substring,
-                timestamp: segmentTimestamp,
+            newSegments.append(TranscriptSegment(
+                id: stableID(for: currentSegmentStartTime + start),
+                text: text,
+                timestamp: currentSegmentStartTime + start,
                 duration: duration,
                 confidence: confidence,
-                speakerID: "speaker-unknown",
+                speakerID: "Speaker 1", // Placeholder
                 isEdited: false
-            )
-            
-            newSegments.append(transcriptSegment)
+            ))
         }
         
         // Update published segments
-        if isFinal {
-            // Append final segments
-            _transcriptSegments.append(contentsOf: newSegments)
-            logger.info("Added \(newSegments.count) final transcript segments")
-        } else {
-            // For partial results, replace temporary segments
-            // Remove any temporary segments from current time window
-            _transcriptSegments.removeAll { segment in
-                segment.timestamp >= currentSegmentStartTime && segment.speakerID == "speaker-unknown"
+        // Note: In real-time, we replace the entire list for the current "segment" (60s window)
+        
+        var preservedSegments = _transcriptSegments.filter { $0.timestamp < currentSegmentStartTime }
+        preservedSegments.append(contentsOf: newSegments)
+        
+        // Rolling buffer: Keep only last 5 minutes (300 seconds)
+        if let lastTimestamp = newSegments.last?.timestamp ?? preservedSegments.last?.timestamp {
+            let threshold = lastTimestamp - 300.0
+            if threshold > 0 {
+                preservedSegments.removeAll { $0.timestamp < threshold }
             }
-            _transcriptSegments.append(contentsOf: newSegments)
         }
+        
+        _transcriptSegments = preservedSegments
+        
+        if isFinal {
+            logger.info("Finalized \(newSegments.count) segments for current window")
+        }
+    }
+    
+    /// Generates a deterministic UUID based on timestamp to prevent UI flickering
+    private func stableID(for timestamp: TimeInterval) -> UUID {
+        // Create a deterministic UUID from the timestamp (Double)
+        // We use the bit pattern of the timestamp to form the first 8 bytes
+        let bits = timestamp.bitPattern
+        let uuid: uuid_t = (
+            UInt8((bits >> 56) & 0xff),
+            UInt8((bits >> 48) & 0xff),
+            UInt8((bits >> 40) & 0xff),
+            UInt8((bits >> 32) & 0xff),
+            UInt8((bits >> 24) & 0xff),
+            UInt8((bits >> 16) & 0xff),
+            UInt8((bits >> 8) & 0xff),
+            UInt8(bits & 0xff),
+            0xAB, 0xCD, 0xEF, 0x01, 0x23, 0x45, 0x67, 0x89
+        )
+        return UUID(uuid: uuid)
     }
     
     /// Starts a timer to restart recognition every minute to avoid Speech Framework limits

@@ -36,6 +36,8 @@ final class RecordingViewModel: ObservableObject {
     private var recordingStartTime: Date?
     private let permissionManager: PermissionManager
     
+    private var autoSaveTimer: Timer?
+
     // MARK: - Initialization
     
     init(
@@ -60,9 +62,35 @@ final class RecordingViewModel: ObservableObject {
         recordingService.recordingState
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
-                self?.saveStateIfNeeded(state: state)
+                self?.handleStateChange(state)
             }
             .store(in: &cancellables)
+    }
+    
+    private func handleStateChange(_ state: RecordingState) {
+        saveStateIfNeeded(state: state)
+        
+        // Manage auto-save timer
+        if state == .recording {
+            startAutoSaveTimer()
+        } else {
+            stopAutoSaveTimer()
+        }
+    }
+    
+    private func startAutoSaveTimer() {
+        stopAutoSaveTimer()
+        autoSaveTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            Task { @MainActor in
+                self.saveStateIfNeeded(state: self.recordingState)
+            }
+        }
+    }
+    
+    private func stopAutoSaveTimer() {
+        autoSaveTimer?.invalidate()
+        autoSaveTimer = nil
     }
     
     private func saveStateIfNeeded(state: RecordingState) {
@@ -79,7 +107,8 @@ final class RecordingViewModel: ObservableObject {
                 startTime: startTime,
                 duration: duration,
                 state: state,
-                audioFileName: session.audioFileURL.lastPathComponent
+                audioFileName: session.audioFileURL.lastPathComponent,
+                transcript: transcriptSegments
             )
         } else if state == .idle {
             // Clear state when recording completes

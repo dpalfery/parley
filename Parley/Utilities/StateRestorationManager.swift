@@ -34,6 +34,7 @@ class StateRestorationManager {
         let duration: TimeInterval
         let state: String // "recording" or "paused"
         let audioFileName: String
+        let transcript: [TranscriptSegment]
     }
     
     // MARK: - Save State
@@ -44,20 +45,22 @@ class StateRestorationManager {
         startTime: Date,
         duration: TimeInterval,
         state: RecordingState,
-        audioFileName: String
+        audioFileName: String,
+        transcript: [TranscriptSegment]
     ) {
         let stateData = InterruptedRecordingState(
             recordingID: recordingID,
             startTime: startTime,
             duration: duration,
             state: stateString(from: state),
-            audioFileName: audioFileName
+            audioFileName: audioFileName,
+            transcript: transcript
         )
         
         if let encoded = try? JSONEncoder().encode(stateData) {
             userDefaults.set(true, forKey: Keys.hasInterruptedRecording)
             userDefaults.set(encoded, forKey: Keys.interruptedRecordingID)
-            logger.info("Saved recording state for restoration: \(recordingID)")
+            logger.info("Saved recording state for restoration: \(recordingID) with \(transcript.count) segments")
         }
     }
     
