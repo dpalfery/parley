@@ -63,6 +63,16 @@ class StorageManager: StorageManagerProtocol {
         let recordingDir = try createRecordingDirectory(for: recordingID)
         let destinationURL = recordingDir.appendingPathComponent(RecordingAudioConfig.audioFileName)
         
+        // Check if source and destination are the same
+        if sourceURL.path == destinationURL.path {
+            // Ensure file protection is set even if we don't copy
+            try? fileManager.setAttributes(
+                [.protectionKey: FileProtectionType.complete],
+                ofItemAtPath: destinationURL.path
+            )
+            return destinationURL
+        }
+        
         do {
             // Check if source file exists
             guard fileManager.fileExists(atPath: sourceURL.path) else {
