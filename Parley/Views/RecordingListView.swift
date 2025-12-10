@@ -67,6 +67,11 @@ struct RecordingListView: View {
             .task {
                 await viewModel.loadRecordings()
             }
+            .onAppear {
+                Task {
+                    await viewModel.loadRecordings()
+                }
+            }
             .refreshable {
                 await viewModel.loadRecordings()
             }

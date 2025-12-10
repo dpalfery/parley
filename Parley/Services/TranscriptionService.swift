@@ -31,6 +31,9 @@ final class TranscriptionService: TranscriptionServiceProtocol {
     private var segmentDuration: TimeInterval = 60.0 // 1-minute segments to avoid Speech Framework limits
     private var segmentTimer: Timer?
     
+    /// Segments from previous recognition requests (accumulated history)
+    private var committedSegments: [TranscriptSegment] = []
+    
     private let logger = Logger(subsystem: "com.meetingrecorder.app", category: "TranscriptionService")
     
     // MARK: - Initialization
@@ -146,6 +149,7 @@ final class TranscriptionService: TranscriptionServiceProtocol {
         
         // Reset state
         _transcriptSegments = []
+        committedSegments = []
         recordingStartTime = Date()
         currentSegmentStartTime = 0.0
         
@@ -284,18 +288,18 @@ final class TranscriptionService: TranscriptionServiceProtocol {
         // Update published segments
         // Note: In real-time, we replace the entire list for the current "segment" (60s window)
         
-        var preservedSegments = _transcriptSegments.filter { $0.timestamp < currentSegmentStartTime }
-        preservedSegments.append(contentsOf: newSegments)
+        var allSegments = committedSegments
+        allSegments.append(contentsOf: newSegments)
         
         // Rolling buffer: Keep only last 5 minutes (300 seconds)
-        if let lastTimestamp = newSegments.last?.timestamp ?? preservedSegments.last?.timestamp {
+        if let lastTimestamp = newSegments.last?.timestamp ?? allSegments.last?.timestamp {
             let threshold = lastTimestamp - 300.0
             if threshold > 0 {
-                preservedSegments.removeAll { $0.timestamp < threshold }
+                allSegments.removeAll { $0.timestamp < threshold }
             }
         }
         
-        _transcriptSegments = preservedSegments
+        _transcriptSegments = allSegments
         
         if isFinal {
             logger.info("Finalized \(newSegments.count) segments for current window")
@@ -335,6 +339,9 @@ final class TranscriptionService: TranscriptionServiceProtocol {
     /// Restarts live transcription for continuous long recordings
     private func restartLiveTranscription() async {
         logger.info("Restarting live transcription for next segment")
+        
+        // Snapshot current segments to committed history
+        committedSegments = _transcriptSegments
         
         // Update segment start time
         currentSegmentStartTime += segmentDuration

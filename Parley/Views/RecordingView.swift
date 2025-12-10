@@ -31,32 +31,35 @@ struct RecordingView: View {
     }
     
     var body: some View {
-        VStack(spacing: 24) {
-            // Recording state indicator
-            recordingStateIndicator
+        GeometryReader { geometry in
+            VStack(spacing: 24) {
+                // Recording state indicator
+                recordingStateIndicator
 
-            // Duration display
-            durationDisplay
+                // Duration display
+                durationDisplay
 
-            // Audio level visualization
-            AudioLevelMeterView(audioLevel: viewModel.audioLevel)
-                .frame(height: 100)
-                .padding(.horizontal)
-                .accessibilityLabel("Audio level")
-                .accessibilityValue("\(Int(viewModel.audioLevel * 100)) percent")
+                // Audio level visualization
+                AudioLevelMeterView(audioLevel: viewModel.audioLevel)
+                    .frame(height: 60)
+                    .padding(.horizontal)
+                    .accessibilityLabel("Audio level")
+                    .accessibilityValue("\(Int(viewModel.audioLevel * 100)) percent")
 
-            // Real-time transcription display
-            transcriptionView
+                // Real-time transcription display
+                transcriptionView
+                    .frame(height: geometry.size.height * 0.6)
 
-            Spacer()
+                Spacer()
 
-            // Recording controls
-            recordingControls
+                // Recording controls
+                recordingControls
 
-            // Notes button
-            notesButton
+                // Notes button
+                notesButton
+            }
+            .padding()
         }
-        .padding()
         .navigationTitle("Recording")
         .navigationBarTitleDisplayMode(.inline)
         .alert("Error", isPresented: $viewModel.showError) {
@@ -91,7 +94,7 @@ struct RecordingView: View {
     
     private var durationDisplay: some View {
         Text(viewModel.formattedDuration)
-            .font(.system(size: 48, weight: .bold, design: .monospaced))
+            .font(.system(size: 32, weight: .bold, design: .monospaced))
             .foregroundColor(.primary)
             .accessibilityLabel("Recording duration: \(viewModel.formattedDuration)")
     }
@@ -178,16 +181,16 @@ struct RecordingView: View {
                 ZStack {
                     Circle()
                         .fill(viewModel.canRecord ? Color.red : Color.gray)
-                        .frame(width: 80, height: 80)
+                        .frame(width: 60, height: 60)
                     
                     if viewModel.canRecord {
                         Circle()
                             .fill(Color.white)
-                            .frame(width: 30, height: 30)
+                            .frame(width: 24, height: 24)
                     } else {
                         RoundedRectangle(cornerRadius: 4)
                             .fill(Color.white)
-                            .frame(width: 30, height: 30)
+                            .frame(width: 24, height: 24)
                     }
                 }
             }
