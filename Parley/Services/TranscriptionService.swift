@@ -289,7 +289,21 @@ final class TranscriptionService: TranscriptionServiceProtocol {
         // Note: In real-time, we replace the entire list for the current "segment" (60s window)
         
         var allSegments = committedSegments
-        allSegments.append(contentsOf: newSegments)
+        
+        // Only append new segments if we have them. 
+        // If SFSpeechRecognizer returns an empty list (which can happen on transient errors or pauses),
+        // we don't want to clear what we've already seen for this window.
+        if !newSegments.isEmpty {
+            allSegments.append(contentsOf: newSegments)
+        } else if isFinal {
+             // If it's final but empty, we might have lost the "last" segment. 
+             // But usually isFinal comes with the last result.
+             // If we have existing "live" segments in this window that aren't in newSegments, we should probably keep them?
+             // Actually, newSegments is rebuilt from the FULL transcription history of this request.
+             // If transcription.segments is empty, then newSegments is empty.
+             // This implies the speech recognizer has nothing for this request.
+             // So relying on committedSegments is correct.
+        }
         
         // Rolling buffer: Keep only last 5 minutes (300 seconds)
         if let lastTimestamp = newSegments.last?.timestamp ?? allSegments.last?.timestamp {
@@ -299,10 +313,13 @@ final class TranscriptionService: TranscriptionServiceProtocol {
             }
         }
         
-        _transcriptSegments = allSegments
+        // Only update if we have content to show, or if it's the very start
+        if !allSegments.isEmpty || (committedSegments.isEmpty && newSegments.isEmpty) {
+             _transcriptSegments = allSegments
+        }
         
         if isFinal {
-            logger.info("Finalized \(newSegments.count) segments for current window")
+            logger.info("Finalized \(newSegments.count) segments for current window. Total visible: \(allSegments.count)")
         }
     }
     

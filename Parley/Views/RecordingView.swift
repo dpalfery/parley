@@ -163,16 +163,28 @@ struct RecordingView: View {
                 } else if viewModel.canStop {
                     print("🔴 DEBUG: Calling stopRecording()")
                     Task {
+                        // Stop recording and get the recording object
                         if let recording = await viewModel.stopRecording() {
+                            print("✅ DEBUG: Recording object created: \(recording.id), duration: \(recording.duration)")
                             // Save recording using StorageManager
                             do {
                                 try await appEnvironment.storageManager.saveRecording(recording)
-                                print("✅ DEBUG: Recording saved successfully")
+                                print("✅ DEBUG: Recording saved successfully to StorageManager")
                                 // Notify lists to update
                                 NotificationCenter.default.post(name: .recordingDidSave, object: nil)
                             } catch {
                                 print("❌ DEBUG: Failed to save recording: \(error)")
-                                // TODO: Handle save error (e.g. show alert)
+                                print("❌ DEBUG: Error details: \(error.localizedDescription)")
+                                await MainActor.run {
+                                    viewModel.errorMessage = "Failed to save recording: \(error.localizedDescription)"
+                                    viewModel.showError = true
+                                }
+                            }
+                        } else {
+                            print("❌ DEBUG: stopRecording() returned nil")
+                            await MainActor.run {
+                                viewModel.errorMessage = "Failed to stop recording (returned nil)"
+                                viewModel.showError = true
                             }
                         }
                     }
