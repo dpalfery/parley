@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import AVFoundation
+import os.log
 
 /// ViewModel for managing recording detail UI state and playback
 @MainActor
@@ -44,11 +45,16 @@ final class RecordingDetailViewModel: ObservableObject {
     @Published var shareURL: URL?
     
     // MARK: - Private Properties
-    
+
     private let storageManager: StorageManagerProtocol
     private let recordingID: UUID
     private var cancellables = Set<AnyCancellable>()
     private let exportService = ExportService()
+    private let logger = Logger(subsystem: "com.meetingrecorder.app", category: "RecordingDetailViewModel")
+
+    // Audio session state tracking
+    private var previousAudioSessionCategory: AVAudioSession.Category?
+    private var previousAudioSessionOptions: AVAudioSession.CategoryOptions = []
     
     // Audio player
     private var audioPlayer: AVPlayer?
@@ -62,7 +68,14 @@ final class RecordingDetailViewModel: ObservableObject {
     }
     
     deinit {
-        // Cleanup handled by SwiftUI automatically when view disappears
+        // Cleanup resources
+        Task { @MainActor in
+            cleanupPlayer()
+        }
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
+
+        logger.info("RecordingDetailViewModel deinitialized")
     }
     
     // MARK: - Loading
@@ -92,7 +105,10 @@ final class RecordingDetailViewModel: ObservableObject {
     private func setupAudioPlayer(url: URL) {
         let playerItem = AVPlayerItem(url: url)
         audioPlayer = AVPlayer(playerItem: playerItem)
-        
+
+        // Configure audio session for playback to use speaker phone
+        configureAudioSessionForPlayback()
+
         // Add time observer for playback progress
         let interval = CMTime(seconds: 0.1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
         timeObserver = audioPlayer?.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
@@ -100,15 +116,75 @@ final class RecordingDetailViewModel: ObservableObject {
                 self?.updatePlaybackTime(time)
             }
         }
-        
+
         // Observe player status
         NotificationCenter.default.publisher(for: .AVPlayerItemDidPlayToEndTime, object: playerItem)
             .sink { [weak self] _ in
                 self?.handlePlaybackEnded()
             }
             .store(in: &cancellables)
+
+        // Add audio interruption handling
+        setupAudioInterruptionHandling()
+    }
+
+    private func configureAudioSessionForPlayback() {
+        do {
+            let audioSession = AVAudioSession.sharedInstance()
+
+            // Save previous audio session state for restoration
+            previousAudioSessionCategory = audioSession.category
+            previousAudioSessionOptions = audioSession.categoryOptions
+
+            try audioSession.setCategory(.playback, options: [.defaultToSpeaker])
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+
+            logger.info("Audio session configured for playback")
+        } catch {
+            logger.error("Failed to configure audio session for playback: \(error.localizedDescription)")
+            ErrorLogger.log(error, context: "RecordingDetailViewModel.configureAudioSessionForPlayback")
+        }
     }
     
+    private func setupAudioInterruptionHandling() {
+        // Handle audio interruptions (phone calls, alarms, etc.)
+        NotificationCenter.default.publisher(for: AVAudioSession.interruptionNotification)
+            .sink { [weak self] notification in
+                guard let self = self else { return }
+
+                if let userInfo = notification.userInfo,
+                   let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+                   let type = AVAudioSession.InterruptionType(rawValue: typeValue) {
+
+                    Task { @MainActor in
+                        switch type {
+                        case .began:
+                            // Interruption began - pause playback
+                            if self.isPlaying {
+                                self.logger.info("Audio interruption began - pausing playback")
+                                self.pause()
+                            }
+
+                        case .ended:
+                            // Interruption ended - check if we should resume
+                            if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt {
+                                let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+
+                                if options.contains(.shouldResume) {
+                                    self.logger.info("Audio interruption ended - resuming playback")
+                                    self.play()
+                                }
+                            }
+
+                        @unknown default:
+                            break
+                        }
+                    }
+                }
+            }
+            .store(in: &cancellables)
+    }
+
     private func cleanupPlayer() {
         if let observer = timeObserver {
             audioPlayer?.removeTimeObserver(observer)
@@ -116,6 +192,27 @@ final class RecordingDetailViewModel: ObservableObject {
         }
         audioPlayer?.pause()
         audioPlayer = nil
+
+        // Reset audio session when cleanup
+        resetAudioSession()
+    }
+
+    private func resetAudioSession() {
+        do {
+            let audioSession = AVAudioSession.sharedInstance()
+
+            // Restore previous audio session state
+            if let previousCategory = previousAudioSessionCategory {
+                try audioSession.setCategory(previousCategory, options: previousAudioSessionOptions)
+                logger.info("Restored audio session to previous category: \(previousCategory.rawValue)")
+            }
+
+            try audioSession.setActive(false, options: .notifyOthersOnDeactivation)
+            logger.info("Audio session reset successfully")
+        } catch {
+            logger.error("Failed to reset audio session: \(error.localizedDescription)")
+            ErrorLogger.log(error, context: "RecordingDetailViewModel.resetAudioSession")
+        }
     }
     
     // MARK: - Playback Control
