@@ -41,14 +41,14 @@ final class RecordingFlowIntegrationTests: XCTestCase {
         super.tearDown()
     }
     
-    private func getCurrentState() -> RecordingState {
+    private func getCurrentState() async -> RecordingState {
         var state: RecordingState = .idle
         let expectation = XCTestExpectation(description: "Get state")
         let cancellable = recordingService.recordingState.sink { value in
             state = value
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 1.0)
+        await fulfillment(of: [expectation], timeout: 1.0)
         cancellable.cancel()
         return state
     }
@@ -57,18 +57,21 @@ final class RecordingFlowIntegrationTests: XCTestCase {
     
     func testCompleteRecordingFlow() async throws {
         // Given: All services initialized
-        XCTAssertEqual(getCurrentState(), .idle)
+        let initialState = await getCurrentState()
+        XCTAssertEqual(initialState, .idle)
         
         // When: Starting recording
-        let session = try await recordingService.startRecording(quality: .medium)
-        XCTAssertEqual(getCurrentState(), .recording)
+        _ = try await recordingService.startRecording(quality: .medium)
+        let recordingState = await getCurrentState()
+        XCTAssertEqual(recordingState, .recording)
         
         // Simulate recording for a short duration
         try await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
         
         // When: Stopping recording
         let recording = try await recordingService.stopRecording()
-        XCTAssertEqual(getCurrentState(), .idle)
+        let stoppedState = await getCurrentState()
+        XCTAssertEqual(stoppedState, .idle)
         XCTAssertNotNil(recording)
         XCTAssertGreaterThan(recording.duration, 0)
         
@@ -100,18 +103,20 @@ final class RecordingFlowIntegrationTests: XCTestCase {
             durationBeforePause = value
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 1.0)
+        await fulfillment(of: [expectation], timeout: 1.0)
         cancellable.cancel()
         
         // When: Pausing
         try await recordingService.pauseRecording()
-        XCTAssertEqual(getCurrentState(), .paused)
+        let pausedState = await getCurrentState()
+        XCTAssertEqual(pausedState, .paused)
         
         try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second pause
         
         // When: Resuming
         try await recordingService.resumeRecording()
-        XCTAssertEqual(getCurrentState(), .recording)
+        let resumedState = await getCurrentState()
+        XCTAssertEqual(resumedState, .recording)
         
         try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
         
@@ -177,8 +182,7 @@ final class RecordingFlowIntegrationTests: XCTestCase {
         XCTAssertNotNil(speakers)
         
         // When: Saving with speaker data
-        var recordingWithSpeakers = recording
-        // Associate speakers with recording
+        let recordingWithSpeakers = recording
         try await storageManager.saveRecording(recordingWithSpeakers)
         
         // Then: Should be saved successfully
@@ -227,7 +231,8 @@ final class RecordingFlowIntegrationTests: XCTestCase {
         try await recordingService.cancelRecording()
         
         // Then: Should return to idle without saving
-        XCTAssertEqual(getCurrentState(), .idle)
+        let cancelledState = await getCurrentState()
+        XCTAssertEqual(cancelledState, .idle)
         
         // Then: No recording should be saved
         let allRecordings = try await storageManager.getAllRecordings(sortedBy: .dateDescending)

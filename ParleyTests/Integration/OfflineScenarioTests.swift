@@ -242,14 +242,14 @@ final class OfflineScenarioTests: XCTestCase {
     
     // MARK: - Sync Status Tests
     
-    private func getCurrentSyncStatus() -> SyncStatus {
+    private func getCurrentSyncStatus() async -> SyncStatus {
         var status: SyncStatus = .idle
         let expectation = XCTestExpectation(description: "Get status")
         let cancellable = cloudSyncService.syncStatus.sink { value in
             status = value
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 1.0)
+        await fulfillment(of: [expectation], timeout: 1.0)
         cancellable.cancel()
         return status
     }
@@ -272,7 +272,7 @@ final class OfflineScenarioTests: XCTestCase {
         // When: Attempting sync
         // (In a real scenario, we would simulate offline state here)
         // For this test, we just check that sync status reflects appropriate state
-        let status = getCurrentSyncStatus()
+        let status = await getCurrentSyncStatus()
         switch status {
         case .idle, .offline:
             XCTAssertTrue(true)
@@ -298,6 +298,11 @@ final class OfflineScenarioTests: XCTestCase {
         fileSize: Int64 = 1_000_000
     ) -> Recording {
         let audioURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).\(RecordingAudioConfig.audioFileExtension)")
+
+        // StorageManager.saveRecording requires the audio file to exist.
+        if !FileManager.default.fileExists(atPath: audioURL.path) {
+            try? Data([0x00, 0x01, 0x02]).write(to: audioURL)
+        }
         
         return Recording(
             id: UUID(),

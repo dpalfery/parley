@@ -25,6 +25,32 @@ final class TranscriptionServiceTests: XCTestCase {
     }
     
     // MARK: - Segment Generation Tests
+
+    func testLiveTranscriptionAccumulatesAcrossFinalBlocks() async {
+        await MainActor.run {
+            sut._testIngest(
+                wordSegments: [
+                    (timestamp: 0.0, duration: 0.2, text: "Hello", confidence: 0.9),
+                    (timestamp: 0.3, duration: 0.2, text: "world", confidence: 0.9)
+                ],
+                isFinal: true
+            )
+
+            sut._testIngest(
+                wordSegments: [
+                    (timestamp: 0.0, duration: 0.2, text: "Next", confidence: 0.9),
+                    (timestamp: 0.3, duration: 0.2, text: "block", confidence: 0.9)
+                ],
+                isFinal: true
+            )
+        }
+
+        let transcript = await sut.getFullTranscript()
+        XCTAssertEqual(transcript.count, 2)
+        XCTAssertEqual(transcript[0].text, "Hello world")
+        XCTAssertEqual(transcript[1].text, "Next block")
+        XCTAssertGreaterThan(transcript[1].timestamp, transcript[0].timestamp)
+    }
     
     func testTranscriptSegmentCreation() {
         // Given: Segment parameters
@@ -166,7 +192,7 @@ final class TranscriptionServiceTests: XCTestCase {
     
     func testSegmentEditTracking() {
         // Given: Original segment
-        var segment = TranscriptSegment(
+        let segment = TranscriptSegment(
             id: UUID(),
             text: "Original text",
             timestamp: 0,
@@ -262,7 +288,7 @@ final class TranscriptionServiceTests: XCTestCase {
         
         // Then: End time should be correct
         let endTime = segment.timestamp + segment.duration
-        XCTAssertEqual(endTime, 1.5)
+        XCTAssertEqual(endTime, 7.5)
     }
     
     func testSegmentWithUpdatedText() {

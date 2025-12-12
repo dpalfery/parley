@@ -372,6 +372,11 @@ final class StorageManagerTests: XCTestCase {
         fileSize: Int64 = 1_000_000
     ) -> Recording {
         let audioURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).\(RecordingAudioConfig.audioFileExtension)")
+
+        // StorageManager.saveRecording requires the audio file to exist.
+        if !FileManager.default.fileExists(atPath: audioURL.path) {
+            try? Data([0x00, 0x01, 0x02]).write(to: audioURL)
+        }
         
         return Recording(
             id: UUID(),

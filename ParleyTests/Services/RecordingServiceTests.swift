@@ -26,62 +26,69 @@ final class RecordingServiceTests: XCTestCase {
     
     // MARK: - Helper Methods
     
-    private func getCurrentState() -> RecordingState {
+    private func getCurrentState() async -> RecordingState {
         var state: RecordingState = .idle
         let expectation = XCTestExpectation(description: "Get state")
         let cancellable = sut.recordingState.sink { value in
             state = value
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 1.0)
+        await fulfillment(of: [expectation], timeout: 1.0)
         cancellable.cancel()
         return state
     }
     
-    private func getCurrentDuration() -> TimeInterval {
+    private func getCurrentDuration() async -> TimeInterval {
         var duration: TimeInterval = 0
         let expectation = XCTestExpectation(description: "Get duration")
         let cancellable = sut.duration.sink { value in
             duration = value
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 1.0)
+        await fulfillment(of: [expectation], timeout: 1.0)
         cancellable.cancel()
         return duration
     }
     
-    private func getCurrentAudioLevel() -> Float {
+    private func getCurrentAudioLevel() async -> Float {
         var level: Float = 0
         let expectation = XCTestExpectation(description: "Get audio level")
         let cancellable = sut.audioLevel.sink { value in
             level = value
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 1.0)
+        await fulfillment(of: [expectation], timeout: 1.0)
         cancellable.cancel()
         return level
     }
     
     // MARK: - State Transition Tests
     
-    func testInitialState() {
+    func testInitialState() async {
         // Given: Fresh service instance
         // When: No action taken
         // Then: State should be idle
-        XCTAssertEqual(getCurrentState(), .idle)
-        XCTAssertEqual(getCurrentDuration(), 0)
-        XCTAssertEqual(getCurrentAudioLevel(), 0)
+        let state = await getCurrentState()
+        XCTAssertEqual(state, .idle)
+
+        let duration = await getCurrentDuration()
+        XCTAssertEqual(duration, 0)
+
+        let level = await getCurrentAudioLevel()
+        XCTAssertEqual(level, 0)
     }
     
     func testStartRecordingTransitionsToRecordingState() async throws {
         // Given: Service in idle state
-        XCTAssertEqual(getCurrentState(), .idle)
+        let initialState = await getCurrentState()
+        XCTAssertEqual(initialState, .idle)
         
         // When: Starting recording
         _ = try await sut.startRecording(quality: .medium)
         
         // Then: State should transition to recording
-        XCTAssertEqual(getCurrentState(), .recording)
+        let state = await getCurrentState()
+        XCTAssertEqual(state, .recording)
         
         // Cleanup
         try await sut.cancelRecording()
@@ -90,13 +97,15 @@ final class RecordingServiceTests: XCTestCase {
     func testPauseRecordingTransitionsToPausedState() async throws {
         // Given: Active recording
         _ = try await sut.startRecording(quality: .medium)
-        XCTAssertEqual(getCurrentState(), .recording)
+        let initialState = await getCurrentState()
+        XCTAssertEqual(initialState, .recording)
         
         // When: Pausing recording
         try await sut.pauseRecording()
         
         // Then: State should transition to paused
-        XCTAssertEqual(getCurrentState(), .paused)
+        let pausedState = await getCurrentState()
+        XCTAssertEqual(pausedState, .paused)
         
         // Cleanup
         try await sut.cancelRecording()
@@ -106,13 +115,15 @@ final class RecordingServiceTests: XCTestCase {
         // Given: Paused recording
         _ = try await sut.startRecording(quality: .medium)
         try await sut.pauseRecording()
-        XCTAssertEqual(getCurrentState(), .paused)
+        let pausedState = await getCurrentState()
+        XCTAssertEqual(pausedState, .paused)
         
         // When: Resuming recording
         try await sut.resumeRecording()
         
         // Then: State should transition back to recording
-        XCTAssertEqual(getCurrentState(), .recording)
+        let state = await getCurrentState()
+        XCTAssertEqual(state, .recording)
         
         // Cleanup
         try await sut.cancelRecording()
@@ -121,25 +132,29 @@ final class RecordingServiceTests: XCTestCase {
     func testStopRecordingTransitionsToProcessingThenIdle() async throws {
         // Given: Active recording
         _ = try await sut.startRecording(quality: .medium)
-        XCTAssertEqual(getCurrentState(), .recording)
+        let initialState = await getCurrentState()
+        XCTAssertEqual(initialState, .recording)
         
         // When: Stopping recording
         _ = try await sut.stopRecording()
         
         // Then: State should transition to idle
-        XCTAssertEqual(getCurrentState(), .idle)
+        let idleState = await getCurrentState()
+        XCTAssertEqual(idleState, .idle)
     }
     
     func testCancelRecordingTransitionsToIdle() async throws {
         // Given: Active recording
         _ = try await sut.startRecording(quality: .medium)
-        XCTAssertEqual(getCurrentState(), .recording)
+        let initialState = await getCurrentState()
+        XCTAssertEqual(initialState, .recording)
         
         // When: Canceling recording
         try await sut.cancelRecording()
         
         // Then: State should transition to idle
-        XCTAssertEqual(getCurrentState(), .idle)
+        let idleState = await getCurrentState()
+        XCTAssertEqual(idleState, .idle)
     }
     
     // MARK: - Audio Configuration Tests
@@ -194,13 +209,14 @@ final class RecordingServiceTests: XCTestCase {
     func testDurationTracksElapsedTime() async throws {
         // Given: Active recording
         _ = try await sut.startRecording(quality: .medium)
-        let initialDuration = getCurrentDuration()
+        let initialDuration = await getCurrentDuration()
         
         // When: Time passes
         try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
         
         // Then: Duration should increase
-        XCTAssertGreaterThan(getCurrentDuration(), initialDuration)
+        let currentDuration = await getCurrentDuration()
+        XCTAssertGreaterThan(currentDuration, initialDuration)
         
         // Cleanup
         try await sut.cancelRecording()
@@ -210,7 +226,7 @@ final class RecordingServiceTests: XCTestCase {
         // Given: Recording with pause
         _ = try await sut.startRecording(quality: .medium)
         try await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
-        let durationBeforePause = getCurrentDuration()
+        let durationBeforePause = await getCurrentDuration()
         
         try await sut.pauseRecording()
         try await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds during pause
@@ -221,7 +237,8 @@ final class RecordingServiceTests: XCTestCase {
         
         // Then: Duration should not include paused time
         let totalExpectedDuration = durationBeforePause + 0.5
-        XCTAssertLessThan(abs(getCurrentDuration() - totalExpectedDuration), 0.2) // Allow 200ms tolerance
+        let currentDuration = await getCurrentDuration()
+        XCTAssertLessThan(abs(currentDuration - totalExpectedDuration), 0.2) // Allow 200ms tolerance
         
         // Cleanup
         try await sut.cancelRecording()
@@ -249,7 +266,8 @@ final class RecordingServiceTests: XCTestCase {
     
     func testPauseWithoutActiveRecordingThrowsError() async {
         // Given: No active recording
-        XCTAssertEqual(getCurrentState(), .idle)
+        let state = await getCurrentState()
+        XCTAssertEqual(state, .idle)
         
         // When: Attempting to pause
         // Then: Should throw error
@@ -265,7 +283,8 @@ final class RecordingServiceTests: XCTestCase {
     
     func testResumeWithoutPausedRecordingThrowsError() async {
         // Given: No paused recording
-        XCTAssertEqual(getCurrentState(), .idle)
+        let state = await getCurrentState()
+        XCTAssertEqual(state, .idle)
         
         // When: Attempting to resume
         // Then: Should throw error
@@ -281,7 +300,8 @@ final class RecordingServiceTests: XCTestCase {
     
     func testStopWithoutActiveRecordingThrowsError() async {
         // Given: No active recording
-        XCTAssertEqual(getCurrentState(), .idle)
+        let state = await getCurrentState()
+        XCTAssertEqual(state, .idle)
         
         // When: Attempting to stop
         // Then: Should throw error
@@ -297,7 +317,8 @@ final class RecordingServiceTests: XCTestCase {
     
     func testCancelWithoutActiveRecordingThrowsError() async {
         // Given: No active recording
-        XCTAssertEqual(getCurrentState(), .idle)
+        let state = await getCurrentState()
+        XCTAssertEqual(state, .idle)
         
         // When: Attempting to cancel
         // Then: Should throw error

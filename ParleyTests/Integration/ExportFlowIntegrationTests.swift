@@ -43,7 +43,7 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Exporting as plain text
-        let textURL = try await exportService.generatePlainText(for: recording)
+        let textURL = try exportService.generatePlainText(for: recording)
         
         // Then: Should create text file
         XCTAssertNotNil(textURL)
@@ -70,7 +70,7 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Exporting as Markdown
-        let markdownURL = try await exportService.generateMarkdown(for: recording)
+        let markdownURL = try exportService.generateMarkdown(for: recording)
         
         // Then: Should create markdown file
         XCTAssertNotNil(markdownURL)
@@ -96,12 +96,13 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(testRecording)
         
         // When: Exporting audio
-        let audioURL = try await exportService.generateAudio(for: testRecording)
+        let audioURL = try exportService.generateAudio(for: testRecording)
         
-        // Then: Should return audio file URL
+        // Then: Should return a copy in the temp directory
         XCTAssertNotNil(audioURL)
         XCTAssertEqual(audioURL.pathExtension, RecordingAudioConfig.audioFileExtension)
-        XCTAssertEqual(audioURL, testRecording.audioFileURL)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: audioURL.path))
+        XCTAssertNotEqual(audioURL, testRecording.audioFileURL)
     }
     
     func testExportMultipleFormatsFlow() async throws {
@@ -112,9 +113,9 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Exporting in all formats
-        let textURL = try await exportService.generatePlainText(for: recording)
-        let markdownURL = try await exportService.generateMarkdown(for: recording)
-        let audioURL = try await exportService.generateAudio(for: recording)
+        let textURL = try exportService.generatePlainText(for: recording)
+        let markdownURL = try exportService.generateMarkdown(for: recording)
+        let audioURL = try exportService.generateAudio(for: recording)
         
         // Then: All exports should succeed
         XCTAssertNotNil(textURL)
@@ -131,10 +132,10 @@ final class ExportFlowIntegrationTests: XCTestCase {
         // Given: Recording with edited transcript
         var recording = testRecording!
         var transcript = createTestTranscript()
+        recording.transcript = transcript
         // Simulate editing by creating a new modified segment
         // (Since TranscriptSegment is immutable, we can't modify it in place)
-        var segments = recording.transcript
-        let originalSegment = segments[0]
+        let originalSegment = transcript[0]
         let editedSegment = TranscriptSegment(
             id: originalSegment.id,
             text: "Edited: Hello everyone",
@@ -144,12 +145,12 @@ final class ExportFlowIntegrationTests: XCTestCase {
             speakerID: originalSegment.speakerID,
             isEdited: true
         )
-        segments[0] = editedSegment
-        recording.transcript = segments
+        transcript[0] = editedSegment
+        recording.transcript = transcript
         try await storageManager.saveRecording(recording)
         
         // When: Exporting
-        let textURL = try await exportService.generatePlainText(for: recording)
+        let textURL = try exportService.generatePlainText(for: recording)
         
         // Then: Should include edited content
         let content = try String(contentsOf: textURL, encoding: .utf8)
@@ -163,7 +164,7 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Exporting as text
-        let textURL = try await exportService.generatePlainText(for: recording)
+        let textURL = try exportService.generatePlainText(for: recording)
         
         // Then: Should still create file with metadata
         XCTAssertNotNil(textURL)
@@ -176,7 +177,7 @@ final class ExportFlowIntegrationTests: XCTestCase {
         var recording = testRecording!
         recording.transcript = createTestTranscript()
         
-        let textURL = try await exportService.generatePlainText(for: recording)
+        let textURL = try exportService.generatePlainText(for: recording)
         
         // When: Cleaning up temporary files
         let fileManager = FileManager.default
@@ -199,7 +200,7 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Exporting
-        let markdownURL = try await exportService.generateMarkdown(for: recording)
+        let markdownURL = try exportService.generateMarkdown(for: recording)
         
         // Then: Should include tags
         let content = try String(contentsOf: markdownURL, encoding: .utf8)
@@ -215,8 +216,8 @@ final class ExportFlowIntegrationTests: XCTestCase {
         try await storageManager.saveRecording(recording)
         
         // When: Preparing files for sharing
-        let textURL = try await exportService.generatePlainText(for: recording)
-        let audioURL = try await exportService.generateAudio(for: recording)
+        let textURL = try exportService.generatePlainText(for: recording)
+        let audioURL = try exportService.generateAudio(for: recording)
         
         // Then: Files should be ready for UIActivityViewController
         XCTAssertNotNil(textURL)
@@ -230,6 +231,12 @@ final class ExportFlowIntegrationTests: XCTestCase {
     
     private func createTestRecording() -> Recording {
         let audioURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).\(RecordingAudioConfig.audioFileExtension)")
+
+        // StorageManager.saveRecording requires the audio file to exist.
+        // For tests we just need a non-empty file.
+        if !FileManager.default.fileExists(atPath: audioURL.path) {
+            try? Data([0x00, 0x01, 0x02]).write(to: audioURL)
+        }
         
         return Recording(
             id: UUID(),

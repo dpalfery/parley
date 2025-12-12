@@ -61,8 +61,7 @@ final class PlaybackFlowIntegrationTests: XCTestCase {
         }
         
         // Then: Audio file should be accessible
-        XCTAssertTrue(FileManager.default.fileExists(atPath: recording.audioFileURL.path) || true)
-        // Note: In test environment, file may not exist but URL should be valid
+        XCTAssertTrue(FileManager.default.fileExists(atPath: recording.audioFileURL.path))
         XCTAssertNotNil(recording.audioFileURL)
     }
     
@@ -206,6 +205,11 @@ final class PlaybackFlowIntegrationTests: XCTestCase {
     
     private func createTestRecording() -> Recording {
         let audioURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).\(RecordingAudioConfig.audioFileExtension)")
+
+        // StorageManager.saveRecording requires the audio file to exist.
+        if !FileManager.default.fileExists(atPath: audioURL.path) {
+            try? Data([0x00, 0x01, 0x02]).write(to: audioURL)
+        }
         
         return Recording(
             id: UUID(),

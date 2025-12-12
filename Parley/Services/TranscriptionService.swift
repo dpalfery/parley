@@ -33,8 +33,25 @@ final class TranscriptionService: TranscriptionServiceProtocol {
     
     /// Segments from previous recognition requests (accumulated history)
     private var committedSegments: [TranscriptSegment] = []
+
+    /// Latest segments for the current recognition window/utterance.
+    /// This gets overwritten on each partial result.
+    private var uncommittedSegments: [TranscriptSegment] = []
+
+    /// Tracks the last raw (Speech-framework relative) end time we've seen.
+    /// If this jumps backwards significantly, Speech has started a new block and we need to advance the offset.
+    private var lastRawEndTimestamp: TimeInterval = 0.0
+
+    private let timestampResetThreshold: TimeInterval = 1.0
     
     private let logger = Logger(subsystem: "com.meetingrecorder.app", category: "TranscriptionService")
+
+    private struct WordSegment {
+        let timestamp: TimeInterval
+        let duration: TimeInterval
+        let substring: String
+        let confidence: Float
+    }
     
     // MARK: - Initialization
     
@@ -107,8 +124,11 @@ final class TranscriptionService: TranscriptionServiceProtocol {
         
         // Reset state
         _transcriptSegments = []
+        committedSegments = []
+        uncommittedSegments = []
         recordingStartTime = Date()
         currentSegmentStartTime = 0.0
+        lastRawEndTimestamp = 0.0
         
         // Create recognition request
         let request = SFSpeechURLRecognitionRequest(url: audioURL)
@@ -150,8 +170,10 @@ final class TranscriptionService: TranscriptionServiceProtocol {
         // Reset state
         _transcriptSegments = []
         committedSegments = []
+        uncommittedSegments = []
         recordingStartTime = Date()
         currentSegmentStartTime = 0.0
+        lastRawEndTimestamp = 0.0
         
         // Create recognition request
         let request = SFSpeechAudioBufferRecognitionRequest()
@@ -213,10 +235,15 @@ final class TranscriptionService: TranscriptionServiceProtocol {
         
         // Reset state
         recordingStartTime = nil
+
+        let finalSegments = (committedSegments + uncommittedSegments).sorted { $0.timestamp < $1.timestamp }
+        await MainActor.run {
+            self._transcriptSegments = finalSegments
+        }
     }
     
     func getFullTranscript() async -> [TranscriptSegment] {
-        return _transcriptSegments
+        return (committedSegments + uncommittedSegments).sorted { $0.timestamp < $1.timestamp }
     }
     
     // MARK: - Helper Methods
@@ -227,79 +254,34 @@ final class TranscriptionService: TranscriptionServiceProtocol {
         
         // Get the best transcription
         let transcription = result.bestTranscription
-        
-        // Aggregate segments into phrases
-        var newSegments: [TranscriptSegment] = []
-        var currentPhraseWords: [SFTranscriptionSegment] = []
-        var currentPhraseStartTime: TimeInterval?
-        
-        // Simple heuristic: break phrase if gap between words is > 0.8s
-        let pauseThreshold: TimeInterval = 0.8
-        
-        for (index, segment) in transcription.segments.enumerated() {
-            if let lastWord = currentPhraseWords.last {
-                let gap = segment.timestamp - (lastWord.timestamp + lastWord.duration)
-                if gap > pauseThreshold {
-                    // Finalize current phrase
-                    if let start = currentPhraseStartTime, !currentPhraseWords.isEmpty {
-                        let text = currentPhraseWords.map { $0.substring }.joined(separator: " ")
-                        let duration = (currentPhraseWords.last?.timestamp ?? 0) + (currentPhraseWords.last?.duration ?? 0) - start
-                        let confidence = currentPhraseWords.map { $0.confidence }.reduce(0, +) / Float(currentPhraseWords.count)
-                        
-                        newSegments.append(TranscriptSegment(
-                            id: stableID(for: currentSegmentStartTime + start),
-                            text: text,
-                            timestamp: currentSegmentStartTime + start,
-                            duration: duration,
-                            confidence: confidence,
-                            speakerID: "Speaker 1", // Placeholder for diarization
-                            isEdited: false
-                        ))
-                    }
-                    // Start new phrase
-                    currentPhraseWords = []
-                    currentPhraseStartTime = nil
-                }
-            }
-            
-            if currentPhraseWords.isEmpty {
-                currentPhraseStartTime = segment.timestamp
-            }
-            currentPhraseWords.append(segment)
-        }
-        
-        // Handle the active (last) phrase
-        if let start = currentPhraseStartTime, !currentPhraseWords.isEmpty {
-            let text = currentPhraseWords.map { $0.substring }.joined(separator: " ")
-            let duration = (currentPhraseWords.last?.timestamp ?? 0) + (currentPhraseWords.last?.duration ?? 0) - start
-            let confidence = currentPhraseWords.map { $0.confidence }.reduce(0, +) / Float(currentPhraseWords.count)
-            
-            newSegments.append(TranscriptSegment(
-                id: stableID(for: currentSegmentStartTime + start),
-                text: text,
-                timestamp: currentSegmentStartTime + start,
-                duration: duration,
-                confidence: confidence,
-                speakerID: "Speaker 1", // Placeholder
-                isEdited: false
-            ))
-        }
-        
-        // Update published segments using consistent committedSegments approach
-        // with proper thread safety and rolling buffer management
 
-        // Merge new segments with committed segments
-        var allSegments = committedSegments
-        if !newSegments.isEmpty {
-            allSegments.append(contentsOf: newSegments)
+        let words: [WordSegment] = transcription.segments.map {
+            WordSegment(timestamp: $0.timestamp, duration: $0.duration, substring: $0.substring, confidence: $0.confidence)
         }
 
-        // Apply rolling buffer cleanup - keep only last 5 minutes (300 seconds)
-        if let lastTimestamp = newSegments.last?.timestamp ?? allSegments.last?.timestamp {
-            let threshold = lastTimestamp - 300.0
-            if threshold > 0 {
-                allSegments.removeAll { $0.timestamp < threshold }
+        // Detect Speech "block" reset (timestamps jump backwards) and advance the global offset.
+        if let last = words.last {
+            let rawEnd = last.timestamp + last.duration
+            if rawEnd < lastRawEndTimestamp - timestampResetThreshold {
+                commitUncommittedSegments()
+                currentSegmentStartTime = endTime(of: committedSegments)
+                lastRawEndTimestamp = 0.0
             }
+            lastRawEndTimestamp = max(lastRawEndTimestamp, rawEnd)
+        }
+
+        let newSegments = buildTranscriptSegments(from: words, offset: currentSegmentStartTime)
+        // Overwrite the current uncommitted window with the latest partial result.
+        uncommittedSegments = newSegments
+
+        // Merge committed + current window for display and saving.
+        let allSegments = (committedSegments + uncommittedSegments).sorted { $0.timestamp < $1.timestamp }
+
+        // If Speech finalizes a block, commit it so the next block doesn't overwrite earlier text.
+        if isFinal {
+            commitUncommittedSegments()
+            currentSegmentStartTime = endTime(of: committedSegments)
+            lastRawEndTimestamp = 0.0
         }
 
         // Update published segments on main thread for thread safety
@@ -315,6 +297,84 @@ final class TranscriptionService: TranscriptionServiceProtocol {
                 self.logger.info("Finalized \(newSegments.count) segments for current window. Total visible: \(allSegments.count)")
             }
         }
+    }
+
+    private func buildTranscriptSegments(from words: [WordSegment], offset: TimeInterval) -> [TranscriptSegment] {
+        guard !words.isEmpty else { return [] }
+
+        var segments: [TranscriptSegment] = []
+        var currentPhraseWords: [WordSegment] = []
+        var currentPhraseStartTime: TimeInterval?
+
+        // Simple heuristic: break phrase if gap between words is > 0.8s
+        let pauseThreshold: TimeInterval = 0.8
+
+        for word in words {
+            if let lastWord = currentPhraseWords.last {
+                let gap = word.timestamp - (lastWord.timestamp + lastWord.duration)
+                if gap > pauseThreshold {
+                    if let start = currentPhraseStartTime, !currentPhraseWords.isEmpty {
+                        segments.append(makePhraseSegment(words: currentPhraseWords, start: start, offset: offset))
+                    }
+                    currentPhraseWords = []
+                    currentPhraseStartTime = nil
+                }
+            }
+
+            if currentPhraseWords.isEmpty {
+                currentPhraseStartTime = word.timestamp
+            }
+            currentPhraseWords.append(word)
+        }
+
+        if let start = currentPhraseStartTime, !currentPhraseWords.isEmpty {
+            segments.append(makePhraseSegment(words: currentPhraseWords, start: start, offset: offset))
+        }
+
+        return segments
+    }
+
+    private func makePhraseSegment(words: [WordSegment], start: TimeInterval, offset: TimeInterval) -> TranscriptSegment {
+        let text = words.map { $0.substring }.joined(separator: " ")
+        let duration = (words.last?.timestamp ?? 0) + (words.last?.duration ?? 0) - start
+        let confidence = words.map { $0.confidence }.reduce(0, +) / Float(words.count)
+        return TranscriptSegment(
+            id: stableID(for: offset + start),
+            text: text,
+            timestamp: offset + start,
+            duration: duration,
+            confidence: confidence,
+            speakerID: "Speaker 1",
+            isEdited: false
+        )
+    }
+
+    private func commitUncommittedSegments() {
+        guard !uncommittedSegments.isEmpty else { return }
+        committedSegments.append(contentsOf: uncommittedSegments)
+        committedSegments.sort { $0.timestamp < $1.timestamp }
+        uncommittedSegments = []
+    }
+
+    private func endTime(of segments: [TranscriptSegment]) -> TimeInterval {
+        segments.map { $0.timestamp + $0.duration }.max() ?? 0.0
+    }
+
+    @MainActor
+    func _testIngest(wordSegments: [(timestamp: TimeInterval, duration: TimeInterval, text: String, confidence: Float)], isFinal: Bool) {
+        let words = wordSegments.map { WordSegment(timestamp: $0.timestamp, duration: $0.duration, substring: $0.text, confidence: $0.confidence) }
+
+        let newSegments = buildTranscriptSegments(from: words, offset: currentSegmentStartTime)
+        uncommittedSegments = newSegments
+        let allSegments = (committedSegments + uncommittedSegments).sorted { $0.timestamp < $1.timestamp }
+
+        if isFinal {
+            commitUncommittedSegments()
+            currentSegmentStartTime = endTime(of: committedSegments)
+            lastRawEndTimestamp = 0.0
+        }
+
+        _transcriptSegments = allSegments
     }
     
     /// Generates a deterministic UUID based on timestamp to prevent UI flickering
@@ -350,12 +410,11 @@ final class TranscriptionService: TranscriptionServiceProtocol {
     /// Restarts live transcription for continuous long recordings
     private func restartLiveTranscription() async {
         logger.info("Restarting live transcription for next segment")
-        
-        // Snapshot current segments to committed history
-        committedSegments = _transcriptSegments
-        
-        // Update segment start time
-        currentSegmentStartTime += segmentDuration
+
+        // Snapshot current segments to committed history and advance offset.
+        commitUncommittedSegments()
+        currentSegmentStartTime = endTime(of: committedSegments)
+        lastRawEndTimestamp = 0.0
         
         // End current request
         recognitionRequest?.endAudio()
