@@ -1,6 +1,6 @@
 //
 //  SyncError.swift
-//  MeetingRecorder
+//  Parley
 //
 //  This file intentionally does not declare SyncError because
 //  a centralized definition exists in `Parley/Utilities/Errors.swift`.

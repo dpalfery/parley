@@ -1,7 +1,7 @@
 // filepath: /Users/david/git/parley/Parley/Services/SpeakerServiceProtocol.swift
 //
 //  SpeakerServiceProtocol.swift
-//  MeetingRecorder
+//  Parley
 //
 //  Created on 2025-11-16.
 //

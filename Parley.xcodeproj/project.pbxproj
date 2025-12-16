@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A000001294B1234567890AA /* MeetingRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000002294B1234567890AA /* MeetingRecorderApp.swift */; };
+		1A000001294B1234567890AA /* ParleyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000002294B1234567890AA /* ParleyApp.swift */; };
 		1A000003294B1234567890AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000004294B1234567890AA /* ContentView.swift */; };
 		1A000005294B1234567890AA /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000006294B1234567890AA /* Recording.swift */; };
 		1A000009294B1234567890AA /* SpeakerProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00000A294B1234567890AA /* SpeakerProfile.swift */; };
@@ -29,7 +29,6 @@
 		1A00002B294B1234567890AA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00002C294B1234567890AA /* Colors.swift */; };
 		1A00002D294B1234567890AA /* CoreDataConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00002E294B1234567890AA /* CoreDataConversions.swift */; };
 		1A000031294B1234567890AA /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000032294B1234567890AA /* ErrorAlert.swift */; };
-                1A000099294B1234567890AA /* NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000098294B1234567890AA /* NotificationNames.swift */; };
 		1A000033294B1234567890AA /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000034294B1234567890AA /* Errors.swift */; };
 		1A000035294B1234567890AA /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000036294B1234567890AA /* HapticFeedback.swift */; };
 		1A000037294B1234567890AA /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000038294B1234567890AA /* LoadingView.swift */; };
@@ -56,7 +55,9 @@
 		1A000061294B1234567890AA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000062294B1234567890AA /* SettingsView.swift */; };
 		1A000063294B1234567890AA /* StorageBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000064294B1234567890AA /* StorageBreakdownView.swift */; };
 		1A000065294B1234567890AA /* MeetingRecorder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1A000066294B1234567890AA /* MeetingRecorder.xcdatamodeld */; };
+		1A000099294B1234567890AA /* NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000098294B1234567890AA /* NotificationNames.swift */; };
 		1A010002294B1234567890AA /* RecordingAudioConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A010001294B1234567890AA /* RecordingAudioConfig.swift */; };
+		636443702EF0F78F009DFE15 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6364436F2EF0F78F009DFE15 /* Media.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +79,7 @@
 
 /* Begin PBXFileReference section */
 		1A000001294B1234567890AB /* Parley.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Parley.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A000002294B1234567890AA /* MeetingRecorderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingRecorderApp.swift; sourceTree = "<group>"; };
+		1A000002294B1234567890AA /* ParleyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParleyApp.swift; sourceTree = "<group>"; };
 		1A000004294B1234567890AA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1A000006294B1234567890AA /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
 		1A00000A294B1234567890AA /* SpeakerProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerProfile.swift; sourceTree = "<group>"; };
@@ -100,7 +101,6 @@
 		1A00002C294B1234567890AA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		1A00002E294B1234567890AA /* CoreDataConversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataConversions.swift; sourceTree = "<group>"; };
 		1A000032294B1234567890AA /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
-                1A000098294B1234567890AA /* NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNames.swift; sourceTree = "<group>"; };
 		1A000034294B1234567890AA /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		1A000036294B1234567890AA /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		1A000038294B1234567890AA /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -129,7 +129,9 @@
 		1A000066294B1234567890AA /* MeetingRecorder.xcdatamodeld */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MeetingRecorder.xcdatamodeld; sourceTree = "<group>"; };
 		1A000068294B1234567890AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A000069294B1234567890AA /* MeetingRecorder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeetingRecorder.entitlements; sourceTree = "<group>"; };
+		1A000098294B1234567890AA /* NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNames.swift; sourceTree = "<group>"; };
 		1A010001294B1234567890AA /* RecordingAudioConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingAudioConfig.swift; sourceTree = "<group>"; };
+		6364436F2EF0F78F009DFE15 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		63FDED622EE79C310055A3BD /* ParleyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParleyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FDED852EE79C6C0055A3BD /* ParleyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParleyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -177,7 +179,7 @@
 		1A00006C294B1234567890AA /* Parley */ = {
 			isa = PBXGroup;
 			children = (
-				1A000002294B1234567890AA /* MeetingRecorderApp.swift */,
+				1A000002294B1234567890AA /* ParleyApp.swift */,
 				1A000004294B1234567890AA /* ContentView.swift */,
 				1A000068294B1234567890AA /* Info.plist */,
 				1A000069294B1234567890AA /* MeetingRecorder.entitlements */,
@@ -187,6 +189,7 @@
 				1A000071294B1234567890AA /* ViewModels */,
 				1A000072294B1234567890AA /* Utilities */,
 				1A000073294B1234567890AA /* Resources */,
+				6364436F2EF0F78F009DFE15 /* Media.xcassets */,
 			);
 			path = Parley;
 			sourceTree = "<group>";
@@ -266,7 +269,7 @@
 				1A00002C294B1234567890AA /* Colors.swift */,
 				1A00002E294B1234567890AA /* CoreDataConversions.swift */,
 				1A000032294B1234567890AA /* ErrorAlert.swift */,
-                                1A000098294B1234567890AA /* NotificationNames.swift */,
+				1A000098294B1234567890AA /* NotificationNames.swift */,
 				1A000034294B1234567890AA /* Errors.swift */,
 				1A000036294B1234567890AA /* HapticFeedback.swift */,
 				1A000038294B1234567890AA /* LoadingView.swift */,
@@ -405,6 +408,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				636443702EF0F78F009DFE15 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,7 +433,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A000001294B1234567890AA /* MeetingRecorderApp.swift in Sources */,
+				1A000001294B1234567890AA /* ParleyApp.swift in Sources */,
 				1A000003294B1234567890AA /* ContentView.swift in Sources */,
 				1A000005294B1234567890AA /* Recording.swift in Sources */,
 				1A000009294B1234567890AA /* SpeakerProfile.swift in Sources */,
@@ -451,7 +455,7 @@
 				1A00002B294B1234567890AA /* Colors.swift in Sources */,
 				1A00002D294B1234567890AA /* CoreDataConversions.swift in Sources */,
 				1A000031294B1234567890AA /* ErrorAlert.swift in Sources */,
-                                1A000099294B1234567890AA /* NotificationNames.swift in Sources */,
+				1A000099294B1234567890AA /* NotificationNames.swift in Sources */,
 				1A000033294B1234567890AA /* Errors.swift in Sources */,
 				1A000035294B1234567890AA /* HapticFeedback.swift in Sources */,
 				1A000037294B1234567890AA /* LoadingView.swift in Sources */,
@@ -547,6 +551,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -638,6 +643,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Parley/MeetingRecorder.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -654,7 +660,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -673,6 +679,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Parley/MeetingRecorder.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -711,7 +718,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J2UNNQ466J;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Palfery.ParleyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

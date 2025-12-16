@@ -2,6 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Icon-20</string>
+		<string>Icon-29</string>
+		<string>Icon-40</string>
+		<string>Icon-60</string>
+		<string>Icon-1024</string>
+	</array>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>Icon-20</string>
+				<string>Icon-29</string>
+				<string>Icon-40</string>
+				<string>Icon-60</string>
+				<string>Icon-1024</string>
+			</array>
+			<key>UIPrerenderedIcon</key>
+			<false/>
+		</dict>
+	</dict>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Parley requires access to the microphone to record your meetings.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>

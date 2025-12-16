@@ -1,6 +1,6 @@
 //
 //  RecordingDetailViewModel.swift
-//  MeetingRecorder
+//  Parley
 //
 //  Created on 2025-11-16.
 //
@@ -136,13 +136,30 @@ final class RecordingDetailViewModel: ObservableObject {
             previousAudioSessionCategory = audioSession.category
             previousAudioSessionOptions = audioSession.categoryOptions
 
-            try audioSession.setCategory(.playback, options: [.defaultToSpeaker])
+            // Configure audio session for speaker playback
+            try audioSession.setCategory(.playback, options: [.defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP])
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
 
-            logger.info("Audio session configured for playback")
+            // Force speaker output by overriding the audio route
+            try audioSession.overrideOutputAudioPort(.speaker)
+
+            logger.info("Audio session configured for playback with speaker output")
         } catch {
             logger.error("Failed to configure audio session for playback: \(error.localizedDescription)")
             ErrorLogger.log(error, context: "RecordingDetailViewModel.configureAudioSessionForPlayback")
+        }
+    }
+
+    private func ensureSpeakerOutput() {
+        do {
+            let audioSession = AVAudioSession.sharedInstance()
+
+            // Force speaker output if not already set
+            try audioSession.overrideOutputAudioPort(.speaker)
+
+            logger.debug("Ensured audio output is routed to speaker")
+        } catch {
+            logger.error("Failed to ensure speaker output: \(error.localizedDescription)")
         }
     }
     
@@ -228,6 +245,9 @@ final class RecordingDetailViewModel: ObservableObject {
     }
     
     func play() {
+        // Ensure audio is routed to speaker before playback
+        ensureSpeakerOutput()
+
         audioPlayer?.play()
         isPlaying = true
     }

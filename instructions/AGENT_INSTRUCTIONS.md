@@ -86,31 +86,11 @@ graph TB
 
 ### Building
 
-```bash
-# Open project in Xcode
-open Parley.xcodeproj
-
-# Build from command line
-xcodebuild -scheme Parley -destination 'platform=iOS Simulator,name=iPhone 15'
-
-# Build for device
-xcodebuild -scheme Parley -destination 'generic/platform=iOS'
-```
+Use the xcode-cli skill
 
 ### Testing
 
-```bash
-# Run all tests
-xcodebuild test -scheme Parley -destination 'platform=iOS Simulator,name=iPhone 15'
-
-# Run unit tests only
-xcodebuild test -scheme Parley -only-testing:ParleyTests -destination 'platform=iOS Simulator,name=iPhone 15'
-
-# Run UI tests only
-xcodebuild test -scheme Parley -only-testing:ParleyUITests -destination 'platform=iOS Simulator,name=iPhone 15'
-
-# Run specific test class
-xcodebuild test -scheme Parley -only-testing:ParleyTests/RecordingServiceTests -destination 'platform=iOS Simulator,name=iPhone 15'
+Use the xcode-cli skill
 ```
 
 ## Service Layer
@@ -356,3 +336,5 @@ ParleyUITests/               # UI tests
 - [Requirements Document](.kiro/specs/meeting-recorder-mvp/requirements.md)
 - [Implementation Tasks](.kiro/specs/meeting-recorder-mvp/tasks.md)
 - [Vision Document](meeting_recorder_vision.md)
+
+**CONFIRM** by stating: `[I read the Agent Instructions]`

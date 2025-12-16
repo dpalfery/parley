@@ -1,6 +1,6 @@
 //
-//  MeetingRecorderApp.swift
-//  MeetingRecorder
+//  ParleyApp.swift
+//  Parley
 //
 //  Created on 2025-11-16.
 //
@@ -8,14 +8,14 @@
 import SwiftUI
 
 @main
-struct MeetingRecorderApp: App {
+struct ParleyApp: App {
     // MARK: - Properties
-    
+
     @StateObject private var appEnvironment = AppEnvironment.shared
     @Environment(\.scenePhase) private var scenePhase
-    
+
     // MARK: - Body
-    
+
     var body: some Scene {
         WindowGroup {
             NavigationStack {
@@ -28,9 +28,9 @@ struct MeetingRecorderApp: App {
             handleScenePhaseChange(to: newPhase)
         }
     }
-    
+
     // MARK: - Lifecycle Handling
-    
+
     /// Handles app lifecycle phase changes
     private func handleScenePhaseChange(to newPhase: ScenePhase) {
         switch newPhase {
@@ -47,7 +47,7 @@ struct MeetingRecorderApp: App {
             break
         }
     }
-    
+
     /// Saves the Core Data context
     private func saveContext() {
         do {

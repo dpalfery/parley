@@ -1,6 +1,6 @@
 //
 //  CoreDataConversions.swift
-//  MeetingRecorder
+//  Parley
 //
 //  Created on 2025-11-16.
 //

@@ -1,6 +1,6 @@
 //
 //  PersistenceController.swift
-//  MeetingRecorder
+//  Parley
 //
 //  Created on 2025-11-16.
 //
@@ -54,7 +54,7 @@ class PersistenceController {
         // Use xcdatamodeld model
         // Note: Using NSPersistentContainer instead of NSPersistentCloudKitContainer
         // CloudKit sync temporarily disabled until iCloud container is configured
-        container = NSPersistentContainer(name: "MeetingRecorder")
+        container = NSPersistentContainer(name: "Parley")
 
         if let description = container.persistentStoreDescriptions.first {
             if inMemory {
@@ -82,7 +82,8 @@ class PersistenceController {
                             // Try loading again with fresh store
                             self.container.loadPersistentStores { _, retryError in
                                 if let retryError = retryError {
-                                    fatalError("Failed to create new Core Data store: \(retryError)")
+                                    print("Failed to create new Core Data store: \(retryError)")
+                                    // Don't crash - let the app continue and handle the error gracefully
                                 }
                             }
                             return
@@ -93,7 +94,8 @@ class PersistenceController {
                 }
                 
                 // If we get here, it's an unhandled error
-                fatalError("Unresolved Core Data error \(error), \(error.userInfo)")
+                print("Unresolved Core Data error \(error), \(error.userInfo)")
+                // Don't crash - let the app continue and handle the error gracefully
             }
         }
         

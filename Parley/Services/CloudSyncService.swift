@@ -1,6 +1,6 @@
 //
 //  CloudSyncService.swift
-//  MeetingRecorder
+//  Parley
 //
 //  Created on 2025-11-16.
 //
@@ -76,7 +76,7 @@ final class CloudSyncService: CloudSyncServiceProtocol {
             // Create directory structure
             let recordingsURL = containerURL
                 .appendingPathComponent("Documents")
-                .appendingPathComponent("MeetingRecorder")
+                .appendingPathComponent("Parley")
                 .appendingPathComponent("Recordings")
             
             do {
@@ -123,7 +123,7 @@ final class CloudSyncService: CloudSyncServiceProtocol {
         
         return containerURL
             .appendingPathComponent("Documents")
-            .appendingPathComponent("MeetingRecorder")
+            .appendingPathComponent("Parley")
             .appendingPathComponent("Recordings")
             .appendingPathComponent(recordingID.uuidString)
     }
