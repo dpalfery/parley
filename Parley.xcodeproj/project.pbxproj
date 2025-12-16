@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -54,7 +54,7 @@
 		1A00005F294B1234567890AA /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000060294B1234567890AA /* RecordingView.swift */; };
 		1A000061294B1234567890AA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000062294B1234567890AA /* SettingsView.swift */; };
 		1A000063294B1234567890AA /* StorageBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000064294B1234567890AA /* StorageBreakdownView.swift */; };
-		1A000065294B1234567890AA /* MeetingRecorder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1A000066294B1234567890AA /* MeetingRecorder.xcdatamodeld */; };
+		1A000065294B1234567890AA /* Parley.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1A000066294B1234567890AA /* Parley.xcdatamodeld */; };
 		1A000099294B1234567890AA /* NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000098294B1234567890AA /* NotificationNames.swift */; };
 		1A010002294B1234567890AA /* RecordingAudioConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A010001294B1234567890AA /* RecordingAudioConfig.swift */; };
 		636443702EF0F78F009DFE15 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6364436F2EF0F78F009DFE15 /* Media.xcassets */; };
@@ -126,9 +126,9 @@
 		1A000060294B1234567890AA /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
 		1A000062294B1234567890AA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1A000064294B1234567890AA /* StorageBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageBreakdownView.swift; sourceTree = "<group>"; };
-		1A000066294B1234567890AA /* MeetingRecorder.xcdatamodeld */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MeetingRecorder.xcdatamodeld; sourceTree = "<group>"; };
+		1A000066294B1234567890AA /* Parley.xcdatamodeld */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodeld; path = Parley.xcdatamodeld; sourceTree = "<group>"; };
 		1A000068294B1234567890AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1A000069294B1234567890AA /* MeetingRecorder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeetingRecorder.entitlements; sourceTree = "<group>"; };
+		1A000069294B1234567890AA /* Parley.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Parley.entitlements; sourceTree = "<group>"; };
 		1A000098294B1234567890AA /* NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNames.swift; sourceTree = "<group>"; };
 		1A010001294B1234567890AA /* RecordingAudioConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingAudioConfig.swift; sourceTree = "<group>"; };
 		6364436F2EF0F78F009DFE15 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -137,31 +137,33 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		63FDED632EE79C320055A3BD /* ParleyTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ParleyTests; sourceTree = "<group>"; };
-		63FDED862EE79C6C0055A3BD /* ParleyUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ParleyUITests; sourceTree = "<group>"; };
+		63FDED632EE79C320055A3BD /* ParleyTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ParleyTests;
+			sourceTree = "<group>";
+		};
+		63FDED862EE79C6C0055A3BD /* ParleyUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ParleyUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		1A00006A294B1234567890AA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		63FDED5F2EE79C310055A3BD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		63FDED822EE79C6C0055A3BD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -182,7 +184,7 @@
 				1A000002294B1234567890AA /* ParleyApp.swift */,
 				1A000004294B1234567890AA /* ContentView.swift */,
 				1A000068294B1234567890AA /* Info.plist */,
-				1A000069294B1234567890AA /* MeetingRecorder.entitlements */,
+				1A000069294B1234567890AA /* Parley.entitlements */,
 				1A00006E294B1234567890AA /* Models */,
 				1A00006F294B1234567890AA /* Services */,
 				1A000070294B1234567890AA /* Views */,
@@ -289,7 +291,7 @@
 		1A000073294B1234567890AA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1A000066294B1234567890AA /* MeetingRecorder.xcdatamodeld */,
+				1A000066294B1234567890AA /* Parley.xcdatamodeld */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -306,8 +308,6 @@
 				1A000077294B1234567890AA /* Resources */,
 			);
 			buildRules = (
-			);
-			dependencies = (
 			);
 			name = Parley;
 			productName = Parley;
@@ -331,8 +331,6 @@
 				63FDED632EE79C320055A3BD /* ParleyTests */,
 			);
 			name = ParleyTests;
-			packageProductDependencies = (
-			);
 			productName = ParleyTests;
 			productReference = 63FDED622EE79C310055A3BD /* ParleyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -354,8 +352,6 @@
 				63FDED862EE79C6C0055A3BD /* ParleyUITests */,
 			);
 			name = ParleyUITests;
-			packageProductDependencies = (
-			);
 			productName = ParleyUITests;
 			productReference = 63FDED852EE79C6C0055A3BD /* ParleyUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -384,7 +380,6 @@
 				};
 			};
 			buildConfigurationList = 1A000079294B1234567890AA /* Build configuration list for PBXProject "Parley" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -392,6 +387,7 @@
 				Base,
 			);
 			mainGroup = 1A00006B294B1234567890AA;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = 1A00006D294B1234567890AA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -406,32 +402,25 @@
 /* Begin PBXResourcesBuildPhase section */
 		1A000077294B1234567890AA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				636443702EF0F78F009DFE15 /* Media.xcassets in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		63FDED602EE79C310055A3BD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		63FDED832EE79C6C0055A3BD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1A000076294B1234567890AA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				1A000001294B1234567890AA /* ParleyApp.swift in Sources */,
 				1A000003294B1234567890AA /* ContentView.swift in Sources */,
@@ -481,24 +470,19 @@
 				1A00005F294B1234567890AA /* RecordingView.swift in Sources */,
 				1A000061294B1234567890AA /* SettingsView.swift in Sources */,
 				1A000063294B1234567890AA /* StorageBreakdownView.swift in Sources */,
-				1A000065294B1234567890AA /* MeetingRecorder.xcdatamodeld in Sources */,
+				1A000065294B1234567890AA /* Parley.xcdatamodeld in Sources */,
 				1A010002294B1234567890AA /* RecordingAudioConfig.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		63FDED5E2EE79C310055A3BD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		63FDED812EE79C6C0055A3BD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -516,7 +500,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		1A00007A294B1234567890AA /* Debug */ = {
+		1A00007A294B1234567890AA /* Debug configuration for PBXProject "Parley" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -581,7 +565,7 @@
 			};
 			name = Debug;
 		};
-		1A00007B294B1234567890AA /* Release */ = {
+		1A00007B294B1234567890AA /* Release configuration for PBXProject "Parley" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -638,13 +622,14 @@
 			};
 			name = Release;
 		};
-		1A00007C294B1234567890AA /* Debug */ = {
+		1A00007C294B1234567890AA /* Debug configuration for PBXNativeTarget "Parley" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = Parley/MeetingRecorder.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Parley/Parley.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J2UNNQ466J;
@@ -668,19 +653,21 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.parley.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		1A00007D294B1234567890AA /* Release */ = {
+		1A00007D294B1234567890AA /* Release configuration for PBXNativeTarget "Parley" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = Parley/MeetingRecorder.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Parley/Parley.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J2UNNQ466J;
@@ -704,13 +691,14 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.parley.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
-		63FDED682EE79C320055A3BD /* Debug */ = {
+		63FDED682EE79C320055A3BD /* Debug configuration for PBXNativeTarget "ParleyTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -732,7 +720,7 @@
 			};
 			name = Debug;
 		};
-		63FDED692EE79C320055A3BD /* Release */ = {
+		63FDED692EE79C320055A3BD /* Release configuration for PBXNativeTarget "ParleyTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -754,7 +742,7 @@
 			};
 			name = Release;
 		};
-		63FDED8E2EE79C6C0055A3BD /* Debug */ = {
+		63FDED8E2EE79C6C0055A3BD /* Debug configuration for PBXNativeTarget "ParleyUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -775,7 +763,7 @@
 			};
 			name = Debug;
 		};
-		63FDED8F2EE79C6C0055A3BD /* Release */ = {
+		63FDED8F2EE79C6C0055A3BD /* Release configuration for PBXNativeTarget "ParleyUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -802,37 +790,33 @@
 		1A000075294B1234567890AA /* Build configuration list for PBXNativeTarget "Parley" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1A00007C294B1234567890AA /* Debug */,
-				1A00007D294B1234567890AA /* Release */,
+				1A00007C294B1234567890AA /* Debug configuration for PBXNativeTarget "Parley" */,
+				1A00007D294B1234567890AA /* Release configuration for PBXNativeTarget "Parley" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		1A000079294B1234567890AA /* Build configuration list for PBXProject "Parley" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1A00007A294B1234567890AA /* Debug */,
-				1A00007B294B1234567890AA /* Release */,
+				1A00007A294B1234567890AA /* Debug configuration for PBXProject "Parley" */,
+				1A00007B294B1234567890AA /* Release configuration for PBXProject "Parley" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		63FDED6A2EE79C320055A3BD /* Build configuration list for PBXNativeTarget "ParleyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				63FDED682EE79C320055A3BD /* Debug */,
-				63FDED692EE79C320055A3BD /* Release */,
+				63FDED682EE79C320055A3BD /* Debug configuration for PBXNativeTarget "ParleyTests" */,
+				63FDED692EE79C320055A3BD /* Release configuration for PBXNativeTarget "ParleyTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		63FDED8D2EE79C6C0055A3BD /* Build configuration list for PBXNativeTarget "ParleyUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				63FDED8E2EE79C6C0055A3BD /* Debug */,
-				63FDED8F2EE79C6C0055A3BD /* Release */,
+				63FDED8E2EE79C6C0055A3BD /* Debug configuration for PBXNativeTarget "ParleyUITests" */,
+				63FDED8F2EE79C6C0055A3BD /* Release configuration for PBXNativeTarget "ParleyUITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
