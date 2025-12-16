@@ -143,6 +143,12 @@ final class RecordingDetailViewModel: ObservableObject {
             // Force speaker output by overriding the audio route
             try audioSession.overrideOutputAudioPort(.speaker)
 
+            // Additional safeguard: Check current route and force speaker if needed
+            let currentRoute = audioSession.currentRoute
+            if currentRoute.outputs.first(where: { $0.portType == .builtInSpeaker }) == nil {
+                try audioSession.overrideOutputAudioPort(.speaker)
+            }
+
             logger.info("Audio session configured for playback with speaker output")
         } catch {
             logger.error("Failed to configure audio session for playback: \(error.localizedDescription)")
@@ -156,6 +162,16 @@ final class RecordingDetailViewModel: ObservableObject {
 
             // Force speaker output if not already set
             try audioSession.overrideOutputAudioPort(.speaker)
+
+            // Verify the output is actually routed to speaker
+            let currentRoute = audioSession.currentRoute
+            let isSpeakerActive = currentRoute.outputs.contains { $0.portType == .builtInSpeaker }
+
+            if !isSpeakerActive {
+                // Try again if speaker is not active
+                try audioSession.overrideOutputAudioPort(.speaker)
+                logger.warning("Had to force speaker output again - previous attempt may have failed")
+            }
 
             logger.debug("Ensured audio output is routed to speaker")
         } catch {
