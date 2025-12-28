@@ -153,7 +153,7 @@ enum SpeakerError: LocalizedError {
 
 /// Centralized error logging utility
 struct ErrorLogger {
-    private static let logger = Logger(subsystem: "com.meetingrecorder.app", category: "Errors")
+    private static let logger = Logger(subsystem: "com.parley.app", category: "Errors")
     
     /// Logs an error with context
     /// - Parameters:

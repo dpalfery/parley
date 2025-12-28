@@ -24,7 +24,7 @@ class PermissionManager: ObservableObject {
     
     // MARK: - Private Properties
     
-    private let logger = Logger(subsystem: "com.meetingrecorder.app", category: "PermissionManager")
+    private let logger = Logger(subsystem: "com.parley.app", category: "PermissionManager")
     
     // MARK: - Permission Status Enum
     
@@ -51,7 +51,7 @@ class PermissionManager: ObservableObject {
     
     /// Checks microphone permission status
     private func checkMicrophonePermission() {
-        let status = AVAudioSession.sharedInstance().recordPermission
+        let status = AVAudioApplication.shared.recordPermission
         
         switch status {
         case .granted:
@@ -104,11 +104,7 @@ class PermissionManager: ObservableObject {
         }
         
         // Request permission
-        let granted = await withCheckedContinuation { continuation in
-            AVAudioSession.sharedInstance().requestRecordPermission { granted in
-                continuation.resume(returning: granted)
-            }
-        }
+        let granted = await AVAudioApplication.requestRecordPermission()
         
         // Update status
         await MainActor.run {

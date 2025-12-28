@@ -107,7 +107,7 @@ struct MainTabView: View {
     // MARK: - State Restoration
     
     private func restoreInterruptedRecording() {
-        guard let state = interruptedRecordingState else { return }
+        guard interruptedRecordingState != nil else { return }
         
         // Switch to recording tab
         selectedTab = 1

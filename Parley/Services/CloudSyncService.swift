@@ -22,7 +22,7 @@ final class CloudSyncService: CloudSyncServiceProtocol {
     
     private let fileManager: FileManager
     private let storageManager: StorageManagerProtocol
-    private let logger = Logger(subsystem: "com.meetingrecorder.app", category: "CloudSyncService")
+    private let logger = Logger(subsystem: "com.parley.app", category: "CloudSyncService")
     
     private var iCloudContainerURL: URL?
     private var isSyncEnabled: Bool = false
@@ -32,7 +32,7 @@ final class CloudSyncService: CloudSyncServiceProtocol {
     
     private let syncQueueLock = NSLock()
     private let userDefaults = UserDefaults.standard
-    private let syncEnabledKey = "com.meetingrecorder.iCloudSyncEnabled"
+    private let syncEnabledKey = "com.parley.iCloudSyncEnabled"
     
     // MARK: - Initialization
     
@@ -160,7 +160,7 @@ final class CloudSyncService: CloudSyncServiceProtocol {
             }
         }
         
-        let queue = DispatchQueue(label: "com.meetingrecorder.networkmonitor")
+        let queue = DispatchQueue(label: "com.parley.networkmonitor")
         pathMonitor?.start(queue: queue)
     }
     

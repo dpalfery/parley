@@ -24,7 +24,7 @@ struct ParleyApp: App {
                     .environment(\.managedObjectContext, appEnvironment.persistenceController.viewContext)
             }
         }
-        .onChange(of: scenePhase) { newPhase in
+        .onChange(of: scenePhase) { oldPhase, newPhase in
             handleScenePhaseChange(to: newPhase)
         }
     }

@@ -1,6 +1,6 @@
 # Error Handling and User Feedback
 
-This document describes the error handling and user feedback infrastructure implemented for the Meeting Recorder app.
+This document describes the error handling and user feedback infrastructure implemented for the Parley app.
 
 ## Error Handling Infrastructure
 

@@ -50,7 +50,7 @@ final class RecordingDetailViewModel: ObservableObject {
     private let recordingID: UUID
     private var cancellables = Set<AnyCancellable>()
     private let exportService = ExportService()
-    private let logger = Logger(subsystem: "com.meetingrecorder.app", category: "RecordingDetailViewModel")
+    private let logger = Logger(subsystem: "com.parley.app", category: "RecordingDetailViewModel")
 
     // Audio session state tracking
     private var previousAudioSessionCategory: AVAudioSession.Category?
@@ -69,8 +69,8 @@ final class RecordingDetailViewModel: ObservableObject {
     
     deinit {
         // Cleanup resources
-        Task { @MainActor in
-            cleanupPlayer()
+        Task { @MainActor [weak self] in
+            self?.cleanupPlayer()
         }
         cancellables.forEach { $0.cancel() }
         cancellables.removeAll()
@@ -104,18 +104,20 @@ final class RecordingDetailViewModel: ObservableObject {
     
     private func setupAudioPlayer(url: URL) {
         let playerItem = AVPlayerItem(url: url)
-        audioPlayer = AVPlayer(playerItem: playerItem)
+        let player = AVPlayer(playerItem: playerItem)
+        audioPlayer = player
 
         // Configure audio session for playback to use speaker phone
         configureAudioSessionForPlayback()
 
         // Add time observer for playback progress
         let interval = CMTime(seconds: 0.1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        timeObserver = audioPlayer?.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
-            Task { @MainActor in
+        let timeUpdateHandler: @Sendable (CMTime) -> Void = { [weak self] time in
+            Task { @MainActor [weak self] in
                 self?.updatePlaybackTime(time)
             }
         }
+        timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: timeUpdateHandler)
 
         // Observe player status
         NotificationCenter.default.publisher(for: .AVPlayerItemDidPlayToEndTime, object: playerItem)
@@ -137,7 +139,10 @@ final class RecordingDetailViewModel: ObservableObject {
             previousAudioSessionOptions = audioSession.categoryOptions
 
             // Configure audio session for speaker playback
-            try audioSession.setCategory(.playback, options: [.defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP])
+            try audioSession.setCategory(.playback, options: [.defaultToSpeaker, .allowBluetoothA2DP])
+            if #available(iOS 26.0, *) {
+                try audioSession.setCategory(.playback, options: [.defaultToSpeaker, .allowBluetoothA2DP])
+            }
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
 
             // Force speaker output by overriding the audio route

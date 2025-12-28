@@ -31,7 +31,7 @@ struct SettingsView: View {
                             Text(quality.displayName).tag(quality)
                         }
                     }
-                    .onChange(of: viewModel.selectedAudioQuality) { newValue in
+                    .onChange(of: viewModel.selectedAudioQuality) { oldValue, newValue in
                         viewModel.updateAudioQuality(newValue)
                     }
                 } header: {
@@ -43,7 +43,7 @@ struct SettingsView: View {
                 // iCloud Sync Section
                 Section {
                     Toggle("iCloud Sync", isOn: $viewModel.iCloudSyncEnabled)
-                        .onChange(of: viewModel.iCloudSyncEnabled) { _ in
+                        .onChange(of: viewModel.iCloudSyncEnabled) { oldValue, newValue in
                             Task {
                                 await viewModel.toggleiCloudSync()
                             }
@@ -96,7 +96,7 @@ struct SettingsView: View {
                             Text(threshold.displayName).tag(threshold)
                         }
                     }
-                    .onChange(of: viewModel.autoCleanupThreshold) { newValue in
+                    .onChange(of: viewModel.autoCleanupThreshold) { oldValue, newValue in
                         viewModel.updateCleanupThreshold(newValue)
                     }
                     

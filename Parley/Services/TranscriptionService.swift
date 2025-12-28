@@ -44,7 +44,7 @@ final class TranscriptionService: TranscriptionServiceProtocol {
 
     private let timestampResetThreshold: TimeInterval = 1.0
     
-    private let logger = Logger(subsystem: "com.meetingrecorder.app", category: "TranscriptionService")
+    private let logger = Logger(subsystem: "com.parley.app", category: "TranscriptionService")
 
     private struct WordSegment {
         let timestamp: TimeInterval

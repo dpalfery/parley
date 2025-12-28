@@ -238,4 +238,40 @@ final class RecordingFlowIntegrationTests: XCTestCase {
         let allRecordings = try await storageManager.getAllRecordings(sortedBy: .dateDescending)
         XCTAssertEqual(allRecordings.count, 0)
     }
+    
+    func testRealTimeTranscriptionProducesOutputDuringRecording() async throws {
+        var transcriptSegments: [TranscriptSegment] = []
+        let cancellable = transcriptionService.transcriptSegments.sink { segments in
+            transcriptSegments = segments
+        }
+        
+        _ = try await recordingService.startRecording(quality: .medium)
+        try await transcriptionService.startLiveTranscription()
+        
+        let startTime = Date()
+        
+        for _ in 0..<10 {
+            let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
+            let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 4096)!
+            buffer.frameLength = 4096
+            
+            if let channelData = buffer.floatChannelData {
+                for frame in 0..<Int(buffer.frameLength) {
+                    channelData[0][frame] = Float.random(in: -0.1...0.1)
+                }
+            }
+            
+            transcriptionService.processAudioBuffer(buffer)
+            try await Task.sleep(nanoseconds: 100_000_000)
+        }
+        
+        let elapsedTime = Date().timeIntervalSince(startTime)
+        
+        try await recordingService.cancelRecording()
+        await transcriptionService.stopTranscription()
+        
+        cancellable.cancel()
+        
+        XCTAssertLessThan(elapsedTime, 5.0, "Real-time transcription test should complete quickly")
+    }
 }

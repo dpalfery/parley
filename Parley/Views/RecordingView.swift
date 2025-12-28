@@ -120,7 +120,7 @@ struct RecordingView: View {
                 .cornerRadius(12)
                 .accessibilityElement(children: .contain)
                 .accessibilityLabel("Live transcript")
-                .onChange(of: viewModel.transcriptSegments.count) { _ in
+                .onChange(of: viewModel.transcriptSegments.count) { oldCount, newCount in
                     // Auto-scroll to latest segment
                     if let lastSegment = viewModel.transcriptSegments.last {
                         withAnimation {

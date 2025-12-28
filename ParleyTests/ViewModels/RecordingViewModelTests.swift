@@ -13,8 +13,9 @@ class MockRecordingService: RecordingServiceProtocol {
     var audioLevel: Published<Float>.Publisher { $_audioLevel }
     var duration: Published<TimeInterval>.Publisher { $_duration }
     
+    private let audioBufferSubject = PassthroughSubject<AVAudioPCMBuffer, Never>()
     var audioBufferPublisher: AnyPublisher<AVAudioPCMBuffer, Never> {
-        PassthroughSubject<AVAudioPCMBuffer, Never>().eraseToAnyPublisher()
+        audioBufferSubject.eraseToAnyPublisher()
     }
     
     func startRecording(quality: AudioQuality) async throws -> RecordingSession {
@@ -29,6 +30,10 @@ class MockRecordingService: RecordingServiceProtocol {
     
     func simulateAudioLevel(_ level: Float) {
         _audioLevel = level
+    }
+    
+    func sendAudioBuffer(_ buffer: AVAudioPCMBuffer) {
+        audioBufferSubject.send(buffer)
     }
 }
 
@@ -120,5 +125,102 @@ class RecordingViewModelTests: XCTestCase {
         XCTAssertEqual(receivedLevels[1], 1.0, accuracy: 0.001, "1.0 linear should be 1.0")
         XCTAssertEqual(receivedLevels[2], 0.0, accuracy: 0.01, "0.001 linear (-60dB) should be 0.0")
         XCTAssertEqual(receivedLevels[3], 0.5, accuracy: 0.05, "0.0316 linear (-30dB) should be approx 0.5")
+    }
+    
+    func testAudioBufferDeliveryWithoutMainThreadDispatch() async {
+        let expectation = XCTestExpectation(description: "Buffer processed")
+        var wasCalledOnMainThread: Bool?
+        
+        class ThreadCheckingTranscriptionService: TranscriptionServiceProtocol {
+            @Published var _transcriptSegments: [TranscriptSegment] = []
+            var transcriptSegments: Published<[TranscriptSegment]>.Publisher { $_transcriptSegments }
+            
+            var bufferProcessedOnMainThread: ((Bool) -> Void)?
+            
+            func startTranscription(audioURL: URL) async throws {}
+            func startLiveTranscription() async throws {}
+            func processAudioBuffer(_ buffer: AVAudioPCMBuffer) {
+                bufferProcessedOnMainThread?(Thread.isMainThread)
+            }
+            func stopTranscription() async {}
+            func getFullTranscript() async -> [TranscriptSegment] { return [] }
+        }
+        
+        let threadCheckService = ThreadCheckingTranscriptionService()
+        threadCheckService.bufferProcessedOnMainThread = { isMain in
+            wasCalledOnMainThread = isMain
+            expectation.fulfill()
+        }
+        
+        await MainActor.run {
+            viewModel = RecordingViewModel(
+                recordingService: mockRecordingService,
+                transcriptionService: threadCheckService,
+                permissionManager: mockPermissionManager
+            )
+        }
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
+        let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 1024)!
+        buffer.frameLength = 1024
+        
+        mockRecordingService.sendAudioBuffer(buffer)
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        XCTAssertNotNil(wasCalledOnMainThread, "processAudioBuffer should have been called")
+        XCTAssertFalse(wasCalledOnMainThread ?? true, "Audio buffers must not be dispatched to main thread")
+    }
+    
+    func testAudioBufferDeliveryTiming() async {
+        let expectation = XCTestExpectation(description: "Multiple buffers processed")
+        expectation.expectedFulfillmentCount = 5
+        var deliveryTimestamps: [Date] = []
+        
+        class TimingTranscriptionService: TranscriptionServiceProtocol {
+            @Published var _transcriptSegments: [TranscriptSegment] = []
+            var transcriptSegments: Published<[TranscriptSegment]>.Publisher { $_transcriptSegments }
+            
+            var onBufferReceived: (() -> Void)?
+            
+            func startTranscription(audioURL: URL) async throws {}
+            func startLiveTranscription() async throws {}
+            func processAudioBuffer(_ buffer: AVAudioPCMBuffer) {
+                onBufferReceived?()
+            }
+            func stopTranscription() async {}
+            func getFullTranscript() async -> [TranscriptSegment] { return [] }
+        }
+        
+        let timingService = TimingTranscriptionService()
+        timingService.onBufferReceived = {
+            deliveryTimestamps.append(Date())
+            expectation.fulfill()
+        }
+        
+        await MainActor.run {
+            viewModel = RecordingViewModel(
+                recordingService: mockRecordingService,
+                transcriptionService: timingService,
+                permissionManager: mockPermissionManager
+            )
+        }
+        
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
+        
+        for _ in 0..<5 {
+            let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 1024)!
+            buffer.frameLength = 1024
+            mockRecordingService.sendAudioBuffer(buffer)
+        }
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        XCTAssertEqual(deliveryTimestamps.count, 5, "All 5 buffers should be delivered")
+        
+        for i in 1..<deliveryTimestamps.count {
+            let latency = deliveryTimestamps[i].timeIntervalSince(deliveryTimestamps[i-1])
+            XCTAssertLessThan(latency, 0.1, "Buffer delivery latency should be <100ms between buffers")
+        }
     }
 }

@@ -151,7 +151,6 @@ final class RecordingViewModel: ObservableObject {
             
         // Bind audio buffer stream to transcription service
         recordingService.audioBufferPublisher
-            .receive(on: DispatchQueue.main) // Ensure consistent thread if needed, but processing usually ok on background
             .sink { [weak self] buffer in
                 self?.transcriptionService.processAudioBuffer(buffer)
             }

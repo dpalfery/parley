@@ -173,7 +173,7 @@ class StorageManager: StorageManagerProtocol {
         }
         
         // Save audio file
-        let savedAudioURL = try saveAudioFile(from: recording.audioFileURL, for: recording.id)
+        _ = try saveAudioFile(from: recording.audioFileURL, for: recording.id)
         
         // Calculate actual file size
         let actualFileSize = calculateFileSize(for: recording.id)
@@ -189,7 +189,7 @@ class StorageManager: StorageManagerProtocol {
         let context = persistenceController.viewContext
         
         try await context.perform {
-            let entity = try RecordingEntity.from(recording: updatedRecording, context: context)
+            _ = try RecordingEntity.from(recording: updatedRecording, context: context)
             try context.save()
         }
     }

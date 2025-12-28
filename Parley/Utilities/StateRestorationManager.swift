@@ -14,7 +14,7 @@ class StateRestorationManager {
     // MARK: - Properties
     
     private let userDefaults = UserDefaults.standard
-    private let logger = Logger(subsystem: "com.meetingrecorder.app", category: "StateRestoration")
+    private let logger = Logger(subsystem: "com.parley.app", category: "StateRestoration")
     
     // MARK: - Keys
     

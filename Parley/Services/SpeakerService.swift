@@ -17,7 +17,7 @@ final class SpeakerService: SpeakerServiceProtocol {
     // MARK: - Private Properties
     
     private let persistenceController: PersistenceController
-    private let logger = Logger(subsystem: "com.meetingrecorder.app", category: "SpeakerService")
+    private let logger = Logger(subsystem: "com.parley.app", category: "SpeakerService")
     
     // Voice Activity Detection parameters
     private let energyThreshold: Float = -40.0  // dB threshold for voice activity
@@ -97,6 +97,7 @@ final class SpeakerService: SpeakerServiceProtocol {
         logger.info("Updating speaker name: \(speakerID) -> \(name)")
         
         let context = persistenceController.newBackgroundContext()
+        let logger = self.logger
         
         try await context.perform {
             // Fetch speaker profile entity
@@ -104,7 +105,7 @@ final class SpeakerService: SpeakerServiceProtocol {
             fetchRequest.predicate = NSPredicate(format: "id == %@", speakerID)
             
             guard let entity = try context.fetch(fetchRequest).first else {
-                self.logger.error("Speaker profile not found: \(speakerID)")
+                logger.error("Speaker profile not found: \(speakerID)")
                 throw SpeakerError.profileNotFound
             }
             
@@ -117,7 +118,7 @@ final class SpeakerService: SpeakerServiceProtocol {
                 try context.save()
             }
             
-            self.logger.info("Speaker name updated successfully")
+            logger.info("Speaker name updated successfully")
         }
     }
     
@@ -274,6 +275,7 @@ final class SpeakerService: SpeakerServiceProtocol {
     /// Creates a new speaker profile
     private func createSpeakerProfile(speakerID: String) async throws {
         let context = persistenceController.newBackgroundContext()
+        let logger = self.logger
         
         try await context.perform {
             let entity = SpeakerProfileEntity(context: context)
@@ -294,7 +296,7 @@ final class SpeakerService: SpeakerServiceProtocol {
                 try context.save()
             }
             
-            self.logger.info("Created speaker profile: \(speakerID)")
+            logger.info("Created speaker profile: \(speakerID)")
         }
     }
     

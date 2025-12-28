@@ -47,10 +47,10 @@ extension Color {
     // MARK: - UI Element Colors
     
     /// Primary accent color for interactive elements
-    static let appAccent = Color.blue
+    static let appAccent = Color("AccentColor")
     
     /// Color for speaker labels
-    static let speakerLabel = Color.blue
+    static let speakerLabel = Color.appAccent
     
     /// Color for low confidence indicators
     static let lowConfidence = Color.orange
@@ -104,17 +104,17 @@ extension Color {
     
     /// Background color for tags
     static var tagBackground: Color {
-        Color.blue.opacity(0.15)
+        Color.appAccent.opacity(0.15)
     }
     
     /// Text color for tags
-    static let tagText = Color.blue
+    static let tagText = Color.appAccent
     
     // MARK: - Highlight Colors
     
     /// Background color for highlighted transcript segments
     static var transcriptHighlight: Color {
-        Color.blue.opacity(0.1)
+        Color.appAccent.opacity(0.1)
     }
     
     /// Shadow color for cards
@@ -126,11 +126,11 @@ extension Color {
     
     /// Background color for filter chips
     static var filterChipBackground: Color {
-        Color.blue.opacity(0.2)
+        Color.appAccent.opacity(0.2)
     }
     
     /// Text color for filter chips
-    static let filterChipText = Color.blue
+    static let filterChipText = Color.appAccent
 }
 
 /// Extension for UIColor to support dynamic colors

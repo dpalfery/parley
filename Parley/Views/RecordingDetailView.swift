@@ -257,7 +257,7 @@ struct RecordingDetailView: View {
                             .id(segment.id)
                         }
                     }
-                    .onChange(of: viewModel.currentSegmentID) { newSegmentID in
+                    .onChange(of: viewModel.currentSegmentID) { oldSegmentID, newSegmentID in
                         if let segmentID = newSegmentID {
                             withAnimation {
                                 proxy.scrollTo(segmentID, anchor: .center)
@@ -414,7 +414,7 @@ struct TranscriptSegmentView: View {
                     .background(Color.inputBackground)
                     .cornerRadius(8)
                     .focused($isFocused)
-                    .onChange(of: editedText) { newValue in
+                    .onChange(of: editedText) { oldValue, newValue in
                         onTextChange(newValue)
                     }
                     .accessibilityLabel("Edit transcript text")

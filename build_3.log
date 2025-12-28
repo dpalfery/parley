@@ -1,0 +1,601 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Parley.xcodeproj -scheme Parley -sdk iphonesimulator -destination "platform=iOS Simulator,id=5FED35D5-8D7D-40CD-829A-604987E1213E" clean build
+
+Build settings from command line:
+    SDKROOT = iphonesimulator26.2
+
+2025-12-17 00:35:35.959 xcodebuild[87134:2936294] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+** CLEAN SUCCEEDED **
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'Parley' in project 'Parley' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/momc --dry-run --action generate --swift-version 5.0 --sdkroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk --iphonesimulator-deployment-target 17.0 --module Parley /Users/david/git/parley/Parley/Resources/Parley.xcdatamodeld /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/david/git/parley/Parley/Media.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 18467450343a5ffca270c0ddca0f742d
+Build description path: /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/XCBuildData/18467450343a5ffca270c0ddca0f742d.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk /Users/david/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.2-23C53-7d00a8b37fbd7999ea79df8ebc024bf0.sdkstatcache
+    cd /Users/david/git/parley/Parley.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -o /Users/david/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.2-23C53-7d00a8b37fbd7999ea79df8ebc024bf0.sdkstatcache
+
+CreateBuildDirectory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products
+    cd /Users/david/git/parley/Parley.xcodeproj
+    builtin-create-build-directory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products
+
+CreateBuildDirectory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex
+    cd /Users/david/git/parley/Parley.xcodeproj
+    builtin-create-build-directory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex
+
+CreateBuildDirectory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+    cd /Users/david/git/parley/Parley.xcodeproj
+    builtin-create-build-directory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator
+    cd /Users/david/git/parley/Parley.xcodeproj
+    builtin-create-build-directory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator
+
+CreateBuildDirectory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/ExplicitPrecompiledModules
+    cd /Users/david/git/parley/Parley.xcodeproj
+    builtin-create-build-directory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
+    cd /Users/david/git/parley/Parley.xcodeproj
+    builtin-create-build-directory /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley-c0df3fec1924e158ffddd1ddad4d39cc-VFS-iphonesimulator/all-product-headers.yaml
+    cd /Users/david/git/parley/Parley.xcodeproj
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley-c0df3fec1924e158ffddd1ddad4d39cc-VFS-iphonesimulator/all-product-headers.yaml
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-all-target-headers.hmap (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-project-headers.hmap (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-project-headers.hmap
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-DebugDylibPath-normal-x86_64.txt (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-DebugDylibPath-normal-x86_64.txt
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-DebugDylibInstallName-normal-x86_64.txt (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-DebugDylibInstallName-normal-x86_64.txt
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-all-non-framework-target-headers.hmap (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-generated-files.hmap (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-generated-files.hmap
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.hmap (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.hmap
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-own-target-headers.hmap (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/Entitlements-Simulated.plist (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/Entitlements-Simulated.plist
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley_const_extract_protocols.json (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley-OutputFileMap.json (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.DependencyMetadataFileList (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.DependencyStaticMetadataFileList (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.SwiftFileList (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.SwiftFileList
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.LinkFileList (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.LinkFileList
+
+WriteAuxiliaryFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.SwiftConstValuesFileList (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    write-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.SwiftConstValuesFileList
+
+MkDir /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /bin/mkdir -p /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app
+
+ProcessProductPackaging /Users/david/git/parley/Parley/Parley.entitlements /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app.xcent (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+    Entitlements:
+    
+    {
+}
+    
+    builtin-productPackagingUtility /Users/david/git/parley/Parley/Parley.entitlements -entitlements -format xml -o /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app.xcent
+
+ProcessProductPackaging /Users/david/git/parley/Parley/Parley.entitlements /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app-Simulated.xcent (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "J2UNNQ466J.com.parley.app";
+}
+    
+    builtin-productPackagingUtility /Users/david/git/parley/Parley/Parley.entitlements -entitlements -format xml -o /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app-Simulated.xcent
+
+ProcessProductPackagingDER /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app-Simulated.xcent /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app-Simulated.xcent.der (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /usr/bin/derq query -f xml -i /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app-Simulated.xcent -o /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app-Simulated.xcent.der --raw
+
+ProcessProductPackagingDER /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app.xcent /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app.xcent.der (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /usr/bin/derq query -f xml -i /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app.xcent -o /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app.xcent.der --raw
+
+Ld /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/__preview.dylib normal (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -O0 -L/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -F/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -install_name @rpath/Parley.debug.dylib -dead_strip -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -Xlinker -dependency_info -Xlinker /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley_dependency_info.dat -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/__preview.dylib
+
+DataModelCompile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/ /Users/david/git/parley/Parley/Resources/Parley.xcdatamodeld (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /Applications/Xcode.app/Contents/Developer/usr/bin/momc --sdkroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk --iphonesimulator-deployment-target 17.0 --module Parley /Users/david/git/parley/Parley/Resources/Parley.xcdatamodeld /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/
+Parley.xcdatamodel: note: Model Parley version checksum: o15ExFJDkMovl2iiZ8C7vqIbfpM2IMspPOGOZ3fdcmM=
+
+GenerateAssetSymbols /Users/david/git/parley/Parley/Media.xcassets (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/david/git/parley/Parley/Media.xcassets --compile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app --output-format human-readable-text --notices --warnings --export-dependency-info /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_dependencies --output-partial-info-plist /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_generated_info.plist --app-icon AppIcon --include-all-app-icons --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 17.0 --platform iphonesimulator --bundle-identifier com.parley.app --generate-swift-asset-symbols /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/* com.apple.actool.compilation-results */
+/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/GeneratedAssetSymbols.h
+/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/GeneratedAssetSymbols.swift
+
+
+MkDir /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_output/thinned (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /bin/mkdir -p /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_output/thinned
+
+MkDir /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_output/unthinned (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /bin/mkdir -p /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_output/unthinned
+
+DataModelCodegen /Users/david/git/parley/Parley/Resources/Parley.xcdatamodeld (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /Applications/Xcode.app/Contents/Developer/usr/bin/momc --action generate --swift-version 5.0 --sdkroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk --iphonesimulator-deployment-target 17.0 --module Parley /Users/david/git/parley/Parley/Resources/Parley.xcdatamodeld /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley
+
+CompileAssetCatalogVariant thinned /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app /Users/david/git/parley/Parley/Media.xcassets (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/david/git/parley/Parley/Media.xcassets --compile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --include-all-app-icons --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --filter-for-thinning-device-configuration iPhone18,1 --filter-for-device-os-version 26.0 --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 17.0 --platform iphonesimulator
+/* com.apple.actool.compilation-results */
+/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_generated_info.plist_thinned
+/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_output/thinned/AppIcon60x60@2x.png
+/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_output/thinned/AppIcon76x76@2x~ipad.png
+/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_output/thinned/Assets.car
+
+
+SwiftDriver Parley normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Parley -Onone -enforce-exclusivity\=checked @/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios17.0-simulator -g -module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -F /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/david/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.2-23C53-7d00a8b37fbd7999ea79df8ebc024bf0.sdkstatcache -output-file-map /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley_const_extract_protocols.json -Xcc -iquote -Xcc /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-generated-files.hmap -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-own-target-headers.hmap -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-all-target-headers.hmap -Xcc -iquote -Xcc /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-project-headers.hmap -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources-normal/x86_64 -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/x86_64 -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley-Swift.h -working-directory /Users/david/git/parley -experimental-emit-module-separately -disable-cmo
+
+SwiftEmitModule normal x86_64 Emitting\ module\ for\ Parley (in target 'Parley' from project 'Parley')
+EmitSwiftModule normal x86_64 (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 Compiling\ RecordingListView.swift,\ RecordingRowView.swift,\ RecordingView.swift,\ SettingsView.swift /Users/david/git/parley/Parley/Views/RecordingListView.swift /Users/david/git/parley/Parley/Views/RecordingRowView.swift /Users/david/git/parley/Parley/Views/RecordingView.swift /Users/david/git/parley/Parley/Views/SettingsView.swift (in target 'Parley' from project 'Parley')
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Views/RecordingListView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Views/RecordingRowView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Views/RecordingView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Views/SettingsView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 Compiling\ CoreDataConversions.swift,\ ErrorAlert.swift,\ NotificationNames.swift,\ Errors.swift,\ HapticFeedback.swift /Users/david/git/parley/Parley/Utilities/CoreDataConversions.swift /Users/david/git/parley/Parley/Utilities/ErrorAlert.swift /Users/david/git/parley/Parley/Utilities/NotificationNames.swift /Users/david/git/parley/Parley/Utilities/Errors.swift /Users/david/git/parley/Parley/Utilities/HapticFeedback.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/CoreDataConversions.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/ErrorAlert.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/NotificationNames.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/Errors.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/HapticFeedback.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 Compiling\ RecordingService.swift,\ RecordingServiceProtocol.swift,\ SpeakerService.swift,\ SpeakerServiceProtocol.swift,\ StorageManager.swift /Users/david/git/parley/Parley/Services/RecordingService.swift /Users/david/git/parley/Parley/Services/RecordingServiceProtocol.swift /Users/david/git/parley/Parley/Services/SpeakerService.swift /Users/david/git/parley/Parley/Services/SpeakerServiceProtocol.swift /Users/david/git/parley/Parley/Services/StorageManager.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Services/RecordingService.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Services/RecordingServiceProtocol.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Services/SpeakerService.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Services/SpeakerServiceProtocol.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Services/StorageManager.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 Compiling\ StorageBreakdownView.swift,\ RecordingAudioConfig.swift,\ RecordingEntity+CoreDataClass.swift,\ RecordingEntity+CoreDataProperties.swift /Users/david/git/parley/Parley/Views/StorageBreakdownView.swift /Users/david/git/parley/Parley/Utilities/RecordingAudioConfig.swift /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley/RecordingEntity+CoreDataClass.swift /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley/RecordingEntity+CoreDataProperties.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Views/StorageBreakdownView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/RecordingAudioConfig.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley/RecordingEntity+CoreDataClass.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley/RecordingEntity+CoreDataProperties.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 Compiling\ ParleyApp.swift,\ ContentView.swift,\ Recording.swift,\ SpeakerProfile.swift,\ StorageError.swift /Users/david/git/parley/Parley/ParleyApp.swift /Users/david/git/parley/Parley/ContentView.swift /Users/david/git/parley/Parley/Models/Recording.swift /Users/david/git/parley/Parley/Models/SpeakerProfile.swift /Users/david/git/parley/Parley/Models/StorageError.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/ParleyApp.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/ContentView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Models/Recording.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Models/SpeakerProfile.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Models/StorageError.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 Compiling\ SyncError.swift,\ TranscriptSegment.swift,\ CloudSyncService.swift,\ CloudSyncServiceProtocol.swift,\ ExportService.swift /Users/david/git/parley/Parley/Models/SyncError.swift /Users/david/git/parley/Parley/Models/TranscriptSegment.swift /Users/david/git/parley/Parley/Services/CloudSyncService.swift /Users/david/git/parley/Parley/Services/CloudSyncServiceProtocol.swift /Users/david/git/parley/Parley/Services/ExportService.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Models/SyncError.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Models/TranscriptSegment.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Services/CloudSyncService.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Services/CloudSyncServiceProtocol.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Services/ExportService.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 Compiling\ LoadingView.swift,\ PerformanceOptimizations.swift,\ PermissionManager.swift,\ PersistenceController.swift,\ ProgressView+Extensions.swift /Users/david/git/parley/Parley/Utilities/LoadingView.swift /Users/david/git/parley/Parley/Utilities/PerformanceOptimizations.swift /Users/david/git/parley/Parley/Utilities/PermissionManager.swift /Users/david/git/parley/Parley/Utilities/PersistenceController.swift /Users/david/git/parley/Parley/Utilities/ProgressView+Extensions.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/LoadingView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/PerformanceOptimizations.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/PermissionManager.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/PersistenceController.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/ProgressView+Extensions.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 Compiling\ RecordingListViewModel.swift,\ RecordingViewModel.swift,\ SettingsViewModel.swift,\ AudioLevelMeterView.swift /Users/david/git/parley/Parley/ViewModels/RecordingListViewModel.swift /Users/david/git/parley/Parley/ViewModels/RecordingViewModel.swift /Users/david/git/parley/Parley/ViewModels/SettingsViewModel.swift /Users/david/git/parley/Parley/Views/AudioLevelMeterView.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/ViewModels/RecordingListViewModel.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/ViewModels/RecordingViewModel.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/ViewModels/SettingsViewModel.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Views/AudioLevelMeterView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 Compiling\ StorageManagerProtocol.swift,\ TranscriptionService.swift,\ TranscriptionServiceProtocol.swift,\ AppEnvironment.swift,\ Colors.swift /Users/david/git/parley/Parley/Services/StorageManagerProtocol.swift /Users/david/git/parley/Parley/Services/TranscriptionService.swift /Users/david/git/parley/Parley/Services/TranscriptionServiceProtocol.swift /Users/david/git/parley/Parley/Utilities/AppEnvironment.swift /Users/david/git/parley/Parley/Utilities/Colors.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Services/StorageManagerProtocol.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Services/TranscriptionService.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Services/TranscriptionServiceProtocol.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/AppEnvironment.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/Colors.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 Compiling\ FilterView.swift,\ MainTabView.swift,\ PermissionRequestView.swift,\ RecordingDetailView.swift /Users/david/git/parley/Parley/Views/FilterView.swift /Users/david/git/parley/Parley/Views/MainTabView.swift /Users/david/git/parley/Parley/Views/PermissionRequestView.swift /Users/david/git/parley/Parley/Views/RecordingDetailView.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Views/FilterView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Views/MainTabView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Views/PermissionRequestView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Views/RecordingDetailView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 Compiling\ SpeakerProfileEntity+CoreDataClass.swift,\ SpeakerProfileEntity+CoreDataProperties.swift,\ Parley+CoreDataModel.swift,\ GeneratedAssetSymbols.swift /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley/SpeakerProfileEntity+CoreDataClass.swift /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley/SpeakerProfileEntity+CoreDataProperties.swift /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley/Parley+CoreDataModel.swift /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley/SpeakerProfileEntity+CoreDataClass.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley/SpeakerProfileEntity+CoreDataProperties.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/CoreDataGenerated/Parley/Parley+CoreDataModel.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+LinkAssetCatalog /Users/david/git/parley/Parley/Media.xcassets (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-linkAssetCatalog --thinned /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_output/thinned --thinned-dependencies /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_generated_info.plist_unthinned --output /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app --plist-output /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/AppIcon60x60@2x.png (in target 'Parley' from project 'Parley')
+note: Emplaced /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Assets.car (in target 'Parley' from project 'Parley')
+note: Emplaced /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/AppIcon76x76@2x~ipad.png (in target 'Parley' from project 'Parley')
+
+SwiftDriverJobDiscovery normal x86_64 Compiling SpeakerProfileEntity+CoreDataClass.swift, SpeakerProfileEntity+CoreDataProperties.swift, Parley+CoreDataModel.swift, GeneratedAssetSymbols.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 Compiling\ ShareSheet.swift,\ StateRestorationManager.swift,\ ToastView.swift,\ UserFeedbackExamples.swift,\ RecordingDetailViewModel.swift /Users/david/git/parley/Parley/Utilities/ShareSheet.swift /Users/david/git/parley/Parley/Utilities/StateRestorationManager.swift /Users/david/git/parley/Parley/Utilities/ToastView.swift /Users/david/git/parley/Parley/Utilities/UserFeedbackExamples.swift /Users/david/git/parley/Parley/ViewModels/RecordingDetailViewModel.swift (in target 'Parley' from project 'Parley')
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/ShareSheet.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/StateRestorationManager.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/ToastView.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/Utilities/UserFeedbackExamples.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+
+SwiftCompile normal x86_64 /Users/david/git/parley/Parley/ViewModels/RecordingDetailViewModel.swift (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+/Users/david/git/parley/Parley/ViewModels/RecordingDetailViewModel.swift:72:14: warning: capture of 'self' in a closure that outlives deinit; this is an error in the Swift 6 language mode
+        Task { @MainActor in
+             ^
+
+ProcessInfoPlistFile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Info.plist /Users/david/git/parley/Parley/Info.plist (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-infoPlistUtility /Users/david/git/parley/Parley/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/assetcatalog_generated_info.plist -o /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Info.plist
+
+SwiftDriverJobDiscovery normal x86_64 Compiling CoreDataConversions.swift, ErrorAlert.swift, NotificationNames.swift, Errors.swift, HapticFeedback.swift (in target 'Parley' from project 'Parley')
+
+SwiftDriverJobDiscovery normal x86_64 Emitting module for Parley (in target 'Parley' from project 'Parley')
+
+SwiftDriver\ Compilation\ Requirements Parley normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Parley -Onone -enforce-exclusivity\=checked @/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios17.0-simulator -g -module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -F /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/david/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.2-23C53-7d00a8b37fbd7999ea79df8ebc024bf0.sdkstatcache -output-file-map /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley_const_extract_protocols.json -Xcc -iquote -Xcc /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-generated-files.hmap -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-own-target-headers.hmap -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-all-target-headers.hmap -Xcc -iquote -Xcc /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-project-headers.hmap -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources-normal/x86_64 -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/x86_64 -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley-Swift.h -working-directory /Users/david/git/parley -experimental-emit-module-separately -disable-cmo
+
+SwiftMergeGeneratedHeaders /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/Parley-Swift.h /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley-Swift.h (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-swiftHeaderTool -arch x86_64 /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley-Swift.h -o /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/Parley-Swift.h
+
+Copy /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.swiftmodule/x86_64-apple-ios-simulator.swiftmodule /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.swiftmodule (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.swiftmodule /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.swiftmodule/x86_64-apple-ios-simulator.swiftmodule
+
+Copy /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.swiftmodule/x86_64-apple-ios-simulator.swiftdoc /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.swiftdoc (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.swiftdoc /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.swiftmodule/x86_64-apple-ios-simulator.swiftdoc
+
+Copy /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.swiftmodule/x86_64-apple-ios-simulator.abi.json /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.abi.json (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.abi.json /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.swiftmodule/x86_64-apple-ios-simulator.abi.json
+
+Copy /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.swiftsourceinfo (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.swiftsourceinfo /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo
+
+SwiftDriverJobDiscovery normal x86_64 Compiling ParleyApp.swift, ContentView.swift, Recording.swift, SpeakerProfile.swift, StorageError.swift (in target 'Parley' from project 'Parley')
+
+SwiftDriverJobDiscovery normal x86_64 Compiling StorageBreakdownView.swift, RecordingAudioConfig.swift, RecordingEntity+CoreDataClass.swift, RecordingEntity+CoreDataProperties.swift (in target 'Parley' from project 'Parley')
+
+SwiftDriverJobDiscovery normal x86_64 Compiling LoadingView.swift, PerformanceOptimizations.swift, PermissionManager.swift, PersistenceController.swift, ProgressView+Extensions.swift (in target 'Parley' from project 'Parley')
+
+SwiftDriverJobDiscovery normal x86_64 Compiling StorageManagerProtocol.swift, TranscriptionService.swift, TranscriptionServiceProtocol.swift, AppEnvironment.swift, Colors.swift (in target 'Parley' from project 'Parley')
+
+SwiftDriverJobDiscovery normal x86_64 Compiling SyncError.swift, TranscriptSegment.swift, CloudSyncService.swift, CloudSyncServiceProtocol.swift, ExportService.swift (in target 'Parley' from project 'Parley')
+
+SwiftDriverJobDiscovery normal x86_64 Compiling RecordingListViewModel.swift, RecordingViewModel.swift, SettingsViewModel.swift, AudioLevelMeterView.swift (in target 'Parley' from project 'Parley')
+
+SwiftDriverJobDiscovery normal x86_64 Compiling RecordingService.swift, RecordingServiceProtocol.swift, SpeakerService.swift, SpeakerServiceProtocol.swift, StorageManager.swift (in target 'Parley' from project 'Parley')
+
+SwiftDriverJobDiscovery normal x86_64 Compiling ShareSheet.swift, StateRestorationManager.swift, ToastView.swift, UserFeedbackExamples.swift, RecordingDetailViewModel.swift (in target 'Parley' from project 'Parley')
+
+SwiftDriverJobDiscovery normal x86_64 Compiling FilterView.swift, MainTabView.swift, PermissionRequestView.swift, RecordingDetailView.swift (in target 'Parley' from project 'Parley')
+
+SwiftDriverJobDiscovery normal x86_64 Compiling RecordingListView.swift, RecordingRowView.swift, RecordingView.swift, SettingsView.swift (in target 'Parley' from project 'Parley')
+
+SwiftDriver\ Compilation Parley normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Parley -Onone -enforce-exclusivity\=checked @/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios17.0-simulator -g -module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -F /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/david/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.2-23C53-7d00a8b37fbd7999ea79df8ebc024bf0.sdkstatcache -output-file-map /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/david/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley_const_extract_protocols.json -Xcc -iquote -Xcc /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-generated-files.hmap -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-own-target-headers.hmap -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-all-target-headers.hmap -Xcc -iquote -Xcc /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-project-headers.hmap -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources-normal/x86_64 -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources/x86_64 -Xcc -I/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley-Swift.h -working-directory /Users/david/git/parley -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Parley.debug.dylib normal (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -O0 -L/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -F/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -filelist /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.LinkFileList -install_name @rpath/Parley.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -Xlinker -dependency_info -Xlinker /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley_dependency_info.dat -fobjc-link-runtime -fprofile-instr-generate -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.swiftmodule @/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley-linker-args.resp -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Parley.debug.dylib
+
+ConstructStubExecutorLinkFileList /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-ExecutorLinkFileList-normal-x86_64.txt (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    construct-stub-executor-link-file-list /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Parley.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-ExecutorLinkFileList-normal-x86_64.txt
+note: Using stub executor library with Swift entry point. (in target 'Parley' from project 'Parley')
+
+Ld /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Parley normal (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -O0 -L/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -F/Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-DebugDylibPath-normal-x86_64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-DebugDylibInstallName-normal-x86_64.txt -Xlinker -filelist -Xlinker /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley-ExecutorLinkFileList-normal-x86_64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app-Simulated.xcent.der /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Parley.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Parley
+
+ExtractAppIntentsMetadata (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name Parley --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk --xcode-version 17C52 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.parley.app --output /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app --target-triple x86_64-apple-ios17.0-simulator --binary-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Parley --dependency-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley_dependency_info.dat --stringsdata-file /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.SwiftFileList --metadata-file-list /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.DependencyMetadataFileList --static-metadata-file-list /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.DependencyStaticMetadataFileList --swift-const-vals-list /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Objects-normal/x86_64/Parley.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2025-12-17 00:35:45.612 appintentsmetadataprocessor[87203:2937079] Starting appintentsmetadataprocessor export
+2025-12-17 00:35:45.615 appintentsmetadataprocessor[87203:2937079] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CopySwiftLibs /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Parley.debug.dylib --scan-folder /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Frameworks --scan-folder /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/PlugIns --scan-folder /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/SystemExtensions --scan-folder /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+AppIntentsSSUTraining (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Info.plist --temp-dir-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/ssu --bundle-id com.parley.app --product-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app --extracted-metadata-path /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Metadata.appintents --metadata-file-list /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.DependencyMetadataFileList --archive-ssu-assets
+2025-12-17 00:35:45.648 appintentsnltrainingprocessor[87204:2937083] Parsing options for appintentsnltrainingprocessor
+2025-12-17 00:35:45.649 appintentsnltrainingprocessor[87204:2937083] No AppShortcuts found - Skipping.
+
+CodeSign /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Parley.debug.dylib (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/Parley.debug.dylib
+
+CodeSign /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/__preview.dylib (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app/__preview.dylib
+
+CodeSign /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Intermediates.noindex/Parley.build/Debug-iphonesimulator/Parley.build/Parley.app.xcent --timestamp\=none --generate-entitlement-der /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app
+
+RegisterExecutionPolicyException /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-RegisterExecutionPolicyException /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app
+
+Validate /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    builtin-validationUtility /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app -shallow-bundle -infoplist-subpath Info.plist
+
+Touch /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app (in target 'Parley' from project 'Parley')
+    cd /Users/david/git/parley
+    /usr/bin/touch -c /Users/david/Library/Developer/Xcode/DerivedData/Parley-gudaxegzzspausbmaupdkiwaxoau/Build/Products/Debug-iphonesimulator/Parley.app
+
+** BUILD SUCCEEDED **
+

@@ -28,8 +28,8 @@ class SettingsViewModel: ObservableObject {
     private let cloudSyncService: CloudSyncServiceProtocol
     private let userDefaults = UserDefaults.standard
     
-    private let audioQualityKey = "com.meetingrecorder.audioQuality"
-    private let cleanupThresholdKey = "com.meetingrecorder.autoCleanupThreshold"
+    private let audioQualityKey = "com.parley.audioQuality"
+    private let cleanupThresholdKey = "com.parley.autoCleanupThreshold"
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -41,7 +41,7 @@ class SettingsViewModel: ObservableObject {
         
         // Load saved preferences
         self.selectedAudioQuality = AudioQuality(rawValue: userDefaults.integer(forKey: audioQualityKey)) ?? .medium
-        self.iCloudSyncEnabled = userDefaults.bool(forKey: "com.meetingrecorder.iCloudSyncEnabled")
+        self.iCloudSyncEnabled = userDefaults.bool(forKey: "com.parley.iCloudSyncEnabled")
         self.autoCleanupThreshold = CleanupThreshold(rawValue: userDefaults.integer(forKey: cleanupThresholdKey)) ?? .never
         
         // Load storage usage

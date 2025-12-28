@@ -297,13 +297,20 @@ final class OfflineScenarioTests: XCTestCase {
         title: String = "Test Recording",
         fileSize: Int64 = 1_000_000
     ) -> Recording {
-        let audioURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).\(RecordingAudioConfig.audioFileExtension)")
+        let audioURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("\(UUID().uuidString).\(RecordingAudioConfig.audioFileExtension)")
 
         // StorageManager.saveRecording requires the audio file to exist.
+        // Some tests validate storage usage, so make the on-disk file match `fileSize`.
         if !FileManager.default.fileExists(atPath: audioURL.path) {
-            try? Data([0x00, 0x01, 0x02]).write(to: audioURL)
+            FileManager.default.createFile(atPath: audioURL.path, contents: nil)
+
+            if fileSize > 0, let handle = try? FileHandle(forWritingTo: audioURL) {
+                try? handle.truncate(atOffset: UInt64(fileSize))
+                try? handle.close()
+            }
         }
-        
+
         return Recording(
             id: UUID(),
             title: title,

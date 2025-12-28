@@ -23,9 +23,9 @@ struct PermissionRequestView: View {
             VStack(spacing: 16) {
                 Image(systemName: "mic.circle.fill")
                     .font(.system(size: 80))
-                    .foregroundColor(.blue)
+                    .foregroundColor(.appAccent)
                 
-                Text("Welcome to Meeting Recorder")
+                Text("Welcome to Parley")
                     .font(.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
@@ -75,7 +75,7 @@ struct PermissionRequestView: View {
                         .frame(height: 50)
                 }
             }
-            .background(Color.blue)
+            .background(Color.appAccent)
             .cornerRadius(12)
             .padding(.horizontal)
             .disabled(isRequestingPermissions)
@@ -110,7 +110,7 @@ struct PermissionItemView: View {
         HStack(alignment: .top, spacing: 16) {
             Image(systemName: icon)
                 .font(.title2)
-                .foregroundColor(.blue)
+                .foregroundColor(.appAccent)
                 .frame(width: 30)
             
             VStack(alignment: .leading, spacing: 4) {

@@ -40,7 +40,7 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
     private var pauseStartTime: Date?
     private var pauseResumeMarkers: [(timestamp: TimeInterval, isPause: Bool)] = []
     
-    private let logger = Logger(subsystem: "com.meetingrecorder.app", category: "RecordingService")
+    private let logger = Logger(subsystem: "com.parley.app", category: "RecordingService")
     
     // MARK: - Initialization
     
@@ -60,7 +60,7 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
         let audioSession = AVAudioSession.sharedInstance()
         let category: AVAudioSession.Category = .playAndRecord
         let mode: AVAudioSession.Mode = .measurement // Measurement mode often best for speech recog
-        var options: AVAudioSession.CategoryOptions = [.defaultToSpeaker, .allowBluetooth]
+        var options: AVAudioSession.CategoryOptions = [.defaultToSpeaker, .allowBluetoothA2DP]
         
         if shouldEnableBluetoothHFP(for: audioSession) {
             options.insert(.allowBluetoothHFP)
@@ -91,7 +91,7 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
     }
     
     private func requestMicrophonePermission() async throws {
-        let status = AVAudioSession.sharedInstance().recordPermission
+        let status = AVAudioApplication.shared.recordPermission
         
         switch status {
         case .granted:
@@ -99,11 +99,7 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
         case .denied:
             throw RecordingError.microphonePermissionDenied
         case .undetermined:
-            let granted = await withCheckedContinuation { continuation in
-                AVAudioSession.sharedInstance().requestRecordPermission { granted in
-                    continuation.resume(returning: granted)
-                }
-            }
+            let granted = await AVAudioApplication.requestRecordPermission()
             if !granted {
                 throw RecordingError.microphonePermissionDenied
             }
@@ -350,7 +346,6 @@ final class RecordingService: NSObject, RecordingServiceProtocol {
     
     private func calculateAudioLevel(from buffer: AVAudioPCMBuffer) {
         guard let channelData = buffer.floatChannelData?[0] else { return }
-        let channelDataValue = channelData.pointee
         let channelDataArray = Array(UnsafeBufferPointer(start: channelData, count: Int(buffer.frameLength)))
         
         var sum: Float = 0
